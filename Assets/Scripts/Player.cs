@@ -119,7 +119,11 @@ public class Player : MonoBehaviour
 
 							overlayText = "Press F to open the door";
 							if (clicked)
+							{
 								RearDoor.theDoor.Open();
+								if(ObjectiveMarker.the.target == Ship.theShip.objectiveDoor)
+									ObjectiveMarker.the.target = null;
+							}
 							break;
 						case Button.Action.CLOSE_DOOR:
 							overlayText = "Press F to close the door";
@@ -154,7 +158,7 @@ public class Player : MonoBehaviour
 									holding.transform.localRotation = Quaternion.identity;
 									holding.GetComponent<EnginePart>().slideTimer = 1.0f;
 									panel.hasComponent = true;
-									Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.PLACED_COMPONENT);
+									Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.READY_TO_FLY);
 									holding = null;
 								}
 							}

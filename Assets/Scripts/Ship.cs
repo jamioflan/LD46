@@ -26,7 +26,7 @@ public class Ship : MonoBehaviour
 	private float landingProgress = 0.0f;
 
 
-	public bool CanFly() { return phase >= StoryPhase.PLACED_COMPONENT; }
+	public bool CanFly() { return phase >= StoryPhase.READY_TO_FLY; }
 
 	private enum State
 	{
@@ -50,7 +50,7 @@ public class Ship : MonoBehaviour
 		LOVE,
 		DIZZY,
 		NEAR_DEATH_EXPERIENCE,
-		BLANK6,
+		PERFECT10,
 		BLANK7,
 		BLANK8,
 		CRY,
@@ -99,14 +99,36 @@ public class Ship : MonoBehaviour
 
 		CHAT3,
 		CHAT4,
-		CHAT5,
 
 		IM_THIRSTY,
 		CAN_GET_FUEL,
+		FUELING_STATION_OVER_THERE,
+		WRONG_WAY,
 
+		PERFECT_LANDING,
+		GRAB_A_FUEL,
+		PUT_IT_IN_THE_FUEL_HATCH,
 
+		CHAT5,
+
+		BACK_TO_THE_MISSION,
+		GETTING_CLOSE,
+
+		CHAT6,
+		CHAT7, 
+
+		LOOK_AT_THAT_LOVELY_THING,
+
+		PUT_IN_POSTBOX,
+		DELIVERY_SUCCESSFUL,
+		NEW_COORDINATES,
+		YOU_HAVE_TO_KILL_ME,
 		
-		
+		CHAT8,
+		CHAT9,
+
+		GOODBYE,
+		WE_ESCAPED,
 	}
 
 	public enum Priority
@@ -123,7 +145,12 @@ public class Ship : MonoBehaviour
 		FETCH_COMPONENT,
 		HAVE_COMPONENT,
 		READY_TO_PLACE,
-		PLACED_COMPONENT,
+		READY_TO_FLY,
+		FLY_TO_MISSION1,
+		FLY_TO_REFUEL,
+		GET_FUEL_CAN,
+		PLACE_FUEL_CAN,
+
 	}
 
 	public void TriggerStoryPhase(StoryPhase storyPhase)
@@ -140,22 +167,50 @@ public class Ship : MonoBehaviour
 					QueueVoiceLine(Emotion.NEUTRAL_HAPPY, VoiceClip.CAPTAIN_OKAY, Priority.STORY);
 					QueueVoiceLine(Emotion.SCAN, VoiceClip.SCANNING_SHIP, Priority.STORY);
 					QueueVoiceLine(Emotion.CRY, VoiceClip.ENGINE_DAMAGED, Priority.STORY);
+					ObjectiveMarker.the.target = objectiveEngine;
 					break;
 				case StoryPhase.FETCH_COMPONENT:
 					QueueVoiceLine(Emotion.DEAD, VoiceClip.AM_I_GONNA_DIE, Priority.STORY);
 					QueueVoiceLine(Emotion.LIGHTBULB, VoiceClip.WE_NEED_A_NEW_X, Priority.STORY);
 					QueueVoiceLine(Emotion.THINKING, VoiceClip.MAYBE_ON_ASTEROID, Priority.STORY);
 					QueueVoiceLine(Emotion.HAPPY, VoiceClip.CHAT1, Priority.CHAT);
+					ObjectiveMarker.the.target = objectiveDoor;
 					break;
 				case StoryPhase.HAVE_COMPONENT:
 					QueueVoiceLine(Emotion.HAPPY, VoiceClip.FOUND_IT, Priority.STORY);
 					QueueVoiceLine(Emotion.CUTE, VoiceClip.CHAT2, Priority.CHAT);
+					ObjectiveMarker.the.target = objectiveEngine;
 					break;
 				case StoryPhase.READY_TO_PLACE:
 					QueueVoiceLine(Emotion.EYES_SHUT, VoiceClip.FIX_ME, Priority.STORY);
+					ObjectiveMarker.the.target = null;
 					break;
-				case StoryPhase.PLACED_COMPONENT:
+				case StoryPhase.READY_TO_FLY:
 					QueueVoiceLine(Emotion.NEAR_DEATH_EXPERIENCE, VoiceClip.FIXED_GRATITUDE, Priority.STORY);
+					QueueVoiceLine(Emotion.NEAR_DEATH_EXPERIENCE, VoiceClip.LETS_GO_DO_MISSION, Priority.STORY);
+					ObjectiveMarker.the.target = objectiveHelm;
+					break;
+				case StoryPhase.FLY_TO_MISSION1:
+					QueueVoiceLine(Emotion.LIGHTBULB, VoiceClip.HOW_TO_HELM, Priority.STORY);
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.SPACE_TO_TAKEOFF, Priority.STORY);
+					QueueVoiceLine(Emotion.THINKING, VoiceClip.OTHER_CONTROLS, Priority.STORY);
+					QueueVoiceLine(Emotion.SCAN, VoiceClip.MISSION_QUEST_MARKER, Priority.STORY);
+
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.CHAT3, Priority.CHAT);
+					QueueVoiceLine(Emotion.CUTE, VoiceClip.CHAT4, Priority.CHAT);
+					ObjectiveMarker.the.target = objectiveMission;
+					break;
+				case StoryPhase.FLY_TO_REFUEL:
+					QueueVoiceLine(Emotion.LIGHTBULB, VoiceClip.IM_THIRSTY, Priority.STORY);
+					QueueVoiceLine(Emotion.DIZZY, VoiceClip.CAN_GET_FUEL, Priority.STORY);
+					QueueVoiceLine(Emotion.THINKING, VoiceClip.FUELING_STATION_OVER_THERE, Priority.STORY);
+					ObjectiveMarker.the.target = objectiveFuelAsteroid;
+					break;
+				case StoryPhase.GET_FUEL_CAN:
+					QueueVoiceLine(Emotion.PERFECT10, VoiceClip.PERFECT_LANDING, Priority.STORY);
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.GRAB_A_FUEL, Priority.STORY);
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.CHAT5, Priority.CHAT);
+					ObjectiveMarker.the.target = objectiveFuelCan;
 					break;
 			}
 
@@ -165,19 +220,32 @@ public class Ship : MonoBehaviour
 	
 	}
 
+	private void InformGoingWrongWay()
+	{
+		QueueVoiceLine(Emotion.ANGRY, VoiceClip.WRONG_WAY, Priority.STORY);
+	}
+
 	private class NextClip
 	{
 		public VoiceClip clip;
 		public Emotion face;
 		public Priority priority;
 		public float timeLeft = float.PositiveInfinity;
+		public float pause = -1;
 	}
+
+	public Transform objectiveEngine, objectiveDoor, objectiveHelm, objectiveMission, objectivePostbox, objectiveFuelAsteroid, objectiveFuelCan;
 
 	private StoryPhase phase = (StoryPhase)(-1);
 	private List<NextClip> clipsToPlay = new List<NextClip>();
 	private NextClip currentClip;
 	private float waitTimer = 0.0f;
 	public AudioSource explosion;
+
+	public void QueuePause(float time, Priority prio)
+	{
+
+	}
 
 	public void QueueVoiceLine(Emotion face, VoiceClip clip, Priority prio, float time = float.PositiveInfinity)
 	{
@@ -316,7 +384,7 @@ public class Ship : MonoBehaviour
 					landingProgress = 1.0f;
 					state = State.LANDED;
 				}
-				transform.position = Vector3.Lerp(preLandingPos, closestAsteroid.transform.position, landingProgress);
+				transform.position = Vector3.Lerp(preLandingPos, closestAsteroid.landingPos.position, landingProgress);
 				transform.rotation = Quaternion.Lerp(preLandingRotation, Quaternion.identity, landingProgress);
 				break;
 			}
@@ -330,6 +398,8 @@ public class Ship : MonoBehaviour
 
 	private void BeginTakeoff()
 	{
+		if(phase == StoryPhase.READY_TO_FLY)
+			TriggerStoryPhase(StoryPhase.FLY_TO_MISSION1);
 		state = State.FREE_FLIGHT;
 		motion.y = 10.0f;
 	}
@@ -355,7 +425,14 @@ public class Ship : MonoBehaviour
 			case State.LANDING:
 				return "Parking mode engaged. Please wait for landing.";
 			case State.FREE_FLIGHT:
-				return "Press W to accelerate, A/D to turn, Space/Shift to ascend/descend.";
+				if (closestAsteroid != null)
+				{
+					return "Press SPACE to land on asteroid";
+				}
+				else
+				{
+					return "Press W to accelerate, A/D to turn";
+				}
 		}
 		return "";
 	}
@@ -389,45 +466,68 @@ public class Ship : MonoBehaviour
 		// Engine pitch, update as we go
 		leftPitch = 0.0f;
 		rightPitch = 0.0f;
+		moveInput = Vector3.zero;
 
 		// Get inputs
 		Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-		yaw += input.x * turnSpeed;
-		helmYaw += input.x;
-		leftPitch += input.x * 30.0f;
-		rightPitch -= input.x * 30.0f;
-		moveInput = new Vector3(0.0f, 0.0f, input.y);
-		if (moveInput.sqrMagnitude > 1.0f)
+		switch(state)
 		{
-			moveInput.Normalize();
-		}
-		moveInput *= moveSpeed;
+			case State.FREE_FLIGHT:
+			{
+				yaw += input.x * turnSpeed;
+				helmYaw += input.x;
+				leftPitch += input.x * 30.0f;
+				rightPitch -= input.x * 30.0f;
+				moveInput = new Vector3(0.0f, 0.0f, input.y);
+				if (moveInput.sqrMagnitude > 1.0f)
+				{
+					moveInput.Normalize();
+				}
+				moveInput *= moveSpeed;
 
-		timeSinceLastBrakeSnippet += Time.deltaTime;
-		if(Mathf.Abs(input.x) > 0.0f || Mathf.Abs(input.y) > 0.0f && timeSinceLastBrakeSnippet >= 5.0f)
-		{
-			timeSinceLastBrakeSnippet = 0.0f;
+				timeSinceLastBrakeSnippet += Time.deltaTime;
+				if (Mathf.Abs(input.x) > 0.0f || Mathf.Abs(input.y) > 0.0f && timeSinceLastBrakeSnippet >= 5.0f)
+				{
+					timeSinceLastBrakeSnippet = 0.0f;
+				}
 
+				// Pitch controls
+				/*
+				pitch = Mathf.Lerp(pitch, 0.0f, turnSpeed * Time.deltaTime);
+				if (Input.GetKey(KeyCode.Space))
+				{
+					pitch = Mathf.Lerp(pitch, 30.0f, turnSpeed * Time.deltaTime);
+					leftPitch += 30.0f;
+					rightPitch += 30.0f;
+					helmPitch += 1.0f;
+				}
+				if (Input.GetKey(KeyCode.LeftShift))
+				{
+					pitch = Mathf.Lerp(pitch, -30.0f, turnSpeed * Time.deltaTime);
+					leftPitch -= 30.0f;
+					rightPitch -= 30.0f;
+					helmPitch -= 1.0f;
+				}
+
+				moveInput.y = pitch / 60.0f;
+				*/
+
+				break;
+			}
+			case State.LANDING:
+			{
+				break;
+			}
+			case State.LANDED:
+			{
+				if(Input.GetKeyDown(KeyCode.Space))
+				{
+					BeginTakeoff();
+				}
+				break;
+			}
 		}
 
-		// Pitch controls
-		pitch = Mathf.Lerp(pitch, 0.0f, turnSpeed * Time.deltaTime);
-		if (Input.GetKey(KeyCode.Space))
-		{
-			pitch = Mathf.Lerp(pitch, 30.0f, turnSpeed * Time.deltaTime);
-			leftPitch += 30.0f;
-			rightPitch += 30.0f;
-			helmPitch += 1.0f;
-		}
-		if (Input.GetKey(KeyCode.LeftShift))
-		{
-			pitch = Mathf.Lerp(pitch, -30.0f, turnSpeed * Time.deltaTime);
-			leftPitch -= 30.0f;
-			rightPitch -= 30.0f;
-			helmPitch -= 1.0f;
-		}
-
-		moveInput.y = pitch / 60.0f;
 	}
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Asteroid : MonoBehaviour
+public class FuelReceptacle : MonoBehaviour
 {
-	public Transform landingPos;
+	public bool hasComponent = false;
 
 	// Start is called before the first frame update
 	void Start()

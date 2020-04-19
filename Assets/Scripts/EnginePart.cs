@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnginePart : MonoBehaviour
 {
-	public float slideTimer = 0.0f;
+	public float slideTimer = -1f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,9 +18,9 @@ public class EnginePart : MonoBehaviour
         if(slideTimer > 0.0f)
 		{
 			slideTimer -= Time.deltaTime;
-
+			transform.localPosition = new Vector3(slideTimer, 0.0f, 0.0f);
 		}
 
-		transform.localPosition = new Vector3(slideTimer, 0.0f, 0.0f);
+		
     }
 }
