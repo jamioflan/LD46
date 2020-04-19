@@ -7,6 +7,7 @@
 		_Face ("Face Index", Int) = 0
 		_Tiling("Tiling", Int) = 4
 		_Bulge("Bulge", Range(0.1, 2)) = 1.0
+		_AnimSpeed("AnimSpeed", float) = 1.0
     }
     SubShader
     {
@@ -44,14 +45,17 @@
 			uint _Face;
 			uint _Tiling;
 			float _Bulge;
+			float _AnimSpeed;
 
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
 
-				uint x = _Face % _Tiling;
-				uint y = _Face / _Tiling;
+				uint face = ((_Time * _AnimSpeed) % 2) > 1 ? _Face : _Face + 32;
+
+				uint x = face % _Tiling;
+				uint y = face / _Tiling;
 				o.majorUV = float2((float)x / (float)_Tiling, (float)y / (float)_Tiling);
 				
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);

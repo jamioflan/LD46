@@ -13,7 +13,9 @@ public class Player : MonoBehaviour
 
 	public float mouseSensitivity = 1.0f;
 	public float moveSpeed = 1.0f;
-	public Transform head;
+	public Transform head, holdPos;
+
+	public GameObject holding;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +38,7 @@ public class Player : MonoBehaviour
 			transform.localScale = Vector3.one;
 			head.localRotation = Quaternion.identity;
 
-			overlayText = "";// Press W to accelerate, A/D to turn and Space/Shift to ascend/descend. Press F to leave.";
+			overlayText = Ship.theShip.GetOverlayText();// Press W to accelerate, A/D to turn and Space/Shift to ascend/descend. Press F to leave.";
 		}
 		else
 		{
@@ -90,15 +92,23 @@ public class Player : MonoBehaviour
 			bool clicked = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.E);
 
 			RaycastHit hit;
-			if (Physics.Raycast(new Ray(head.position, head.forward), out hit, 3.0f))
+			if (Physics.Raycast(new Ray(head.position, head.forward), out hit, 3.0f)
+				&& hit.collider.gameObject != holding)
 			{
 				if (hit.collider.GetComponent<Helm>() != null)
 				{
-					overlayText = "Press F to pilot the ship";
-					if (clicked)
+					if (Ship.theShip.CanFly())
 					{
-						isAtHelm = true;
-						transform.SetParent(Ship.theShip.standingPos);
+						overlayText = "Press F to pilot the ship";
+						if (clicked)
+						{
+							isAtHelm = true;
+							transform.SetParent(Ship.theShip.standingPos);
+						}
+					}
+					else
+					{
+						overlayText = "Ship controls are locked";
 					}
 				}
 				else if (hit.collider.GetComponent<Button>() != null)
@@ -118,6 +128,64 @@ public class Player : MonoBehaviour
 							break;
 					}
 				}
+				else if(hit.collider.GetComponentInParent<RearDoor>() != null)
+				{
+					overlayText = "Locked. Please use door control panel to the right";
+				}
+				else if(hit.collider.GetComponent<EnginePanel>() != null)
+				{
+					EnginePanel panel = hit.collider.GetComponent<EnginePanel>();
+					if(panel.hasComponent)
+					{
+						overlayText = "All patched up";
+					}
+					else
+					{
+						if (holding != null)
+						{
+							if(holding.GetComponent<EnginePart>() != null)
+							{
+								overlayText = $"Press F to place {holding.name}";
+								Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.READY_TO_PLACE);
+								if (clicked)
+								{
+									holding.transform.SetParent(panel.socket);
+									holding.transform.localPosition = Vector3.zero;
+									holding.transform.localRotation = Quaternion.identity;
+									holding.GetComponent<EnginePart>().slideTimer = 1.0f;
+									panel.hasComponent = true;
+									Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.PLACED_COMPONENT);
+									holding = null;
+								}
+							}
+							else
+							{
+								overlayText = "That isn't the right part";
+							}
+						}
+						else
+						{
+							overlayText = "Something's missing from this engine";
+							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.FETCH_COMPONENT);
+						}
+					}
+				}
+				else if(hit.collider.GetComponent<EnginePart>() != null)
+				{
+					if(holding == null)
+					{
+						overlayText = $"Press F to pickup {hit.collider.name}";
+						if(clicked)
+						{
+							holding = hit.collider.gameObject;
+							holding.transform.SetParent(holdPos);
+							holding.transform.localPosition = Vector3.zero;
+							holding.transform.localRotation = Quaternion.identity;
+							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.HAVE_COMPONENT);
+						}
+					}
+				}
+					
 			}
 
 			
