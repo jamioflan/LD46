@@ -14,7 +14,7 @@ public class ObjectiveMarker : MonoBehaviour
 	public Transform target;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 		the = this;
 		rect = GetComponent<RectTransform>();

@@ -18,7 +18,7 @@ public class EnginePart : MonoBehaviour
         if(slideTimer > 0.0f)
 		{
 			slideTimer -= Time.deltaTime;
-			transform.localPosition = new Vector3(slideTimer, 0.0f, 0.0f);
+			transform.localPosition = new Vector3(0.0f, -slideTimer, 0.0f);
 		}
 
 		

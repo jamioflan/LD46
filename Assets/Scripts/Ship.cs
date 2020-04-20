@@ -25,7 +25,9 @@ public class Ship : MonoBehaviour
 	private Quaternion preLandingRotation = Quaternion.identity;
 	private float landingProgress = 0.0f;
 
+	public TMPro.TextMeshProUGUI questLog1, questLog2;
 
+	public bool CanPickChest() { return phase >= StoryPhase.PICKUP_CHEST; }
 	public bool CanFly() { return phase >= StoryPhase.READY_TO_FLY; }
 
 	private enum State
@@ -108,10 +110,8 @@ public class Ship : MonoBehaviour
 		PERFECT_LANDING,
 		GRAB_A_FUEL,
 		PUT_IT_IN_THE_FUEL_HATCH,
-
-		CHAT5,
-
 		BACK_TO_THE_MISSION,
+	
 		GETTING_CLOSE,
 
 		CHAT6,
@@ -119,10 +119,13 @@ public class Ship : MonoBehaviour
 
 		LOOK_AT_THAT_LOVELY_THING,
 
+		GRAB_CHEST,
+		LIFT,
 		PUT_IN_POSTBOX,
 		DELIVERY_SUCCESSFUL,
 		NEW_COORDINATES,
 		YOU_HAVE_TO_KILL_ME,
+		TIME_IS_UP,
 		
 		CHAT8,
 		CHAT9,
@@ -147,10 +150,20 @@ public class Ship : MonoBehaviour
 		READY_TO_PLACE,
 		READY_TO_FLY,
 		FLY_TO_MISSION1,
+
 		FLY_TO_REFUEL,
 		GET_FUEL_CAN,
 		PLACE_FUEL_CAN,
 
+		FLY_TO_MISSION2,
+		PICKUP_CHEST,
+		LOOK_AT_CHEST,
+		DROPOFF_CHEST,
+		FLY_TO_DOOM,
+
+		DEATH,
+		LIFE,
+		PLAYER_WAS_AN_ID,
 	}
 
 	public void TriggerStoryPhase(StoryPhase storyPhase)
@@ -158,6 +171,10 @@ public class Ship : MonoBehaviour
 		if (storyPhase > phase)
 		{
 			phase = storyPhase;
+
+			questLog1.text = "";
+			questLog1.fontStyle = TMPro.FontStyles.Normal;
+			questLog2.text = "";
 
 			switch (storyPhase)
 			{
@@ -167,6 +184,7 @@ public class Ship : MonoBehaviour
 					QueueVoiceLine(Emotion.NEUTRAL_HAPPY, VoiceClip.CAPTAIN_OKAY, Priority.STORY);
 					QueueVoiceLine(Emotion.SCAN, VoiceClip.SCANNING_SHIP, Priority.STORY);
 					QueueVoiceLine(Emotion.CRY, VoiceClip.ENGINE_DAMAGED, Priority.STORY);
+					questLog1.text = "Check Robin's engine";
 					ObjectiveMarker.the.target = objectiveEngine;
 					break;
 				case StoryPhase.FETCH_COMPONENT:
@@ -174,11 +192,14 @@ public class Ship : MonoBehaviour
 					QueueVoiceLine(Emotion.LIGHTBULB, VoiceClip.WE_NEED_A_NEW_X, Priority.STORY);
 					QueueVoiceLine(Emotion.THINKING, VoiceClip.MAYBE_ON_ASTEROID, Priority.STORY);
 					QueueVoiceLine(Emotion.HAPPY, VoiceClip.CHAT1, Priority.CHAT);
+					questLog1.text = "Find the component";
+					music.Play();
 					ObjectiveMarker.the.target = objectiveDoor;
 					break;
 				case StoryPhase.HAVE_COMPONENT:
 					QueueVoiceLine(Emotion.HAPPY, VoiceClip.FOUND_IT, Priority.STORY);
 					QueueVoiceLine(Emotion.CUTE, VoiceClip.CHAT2, Priority.CHAT);
+					questLog1.text = "Fit the component into the engine";
 					ObjectiveMarker.the.target = objectiveEngine;
 					break;
 				case StoryPhase.READY_TO_PLACE:
@@ -188,37 +209,115 @@ public class Ship : MonoBehaviour
 				case StoryPhase.READY_TO_FLY:
 					QueueVoiceLine(Emotion.NEAR_DEATH_EXPERIENCE, VoiceClip.FIXED_GRATITUDE, Priority.STORY);
 					QueueVoiceLine(Emotion.NEAR_DEATH_EXPERIENCE, VoiceClip.LETS_GO_DO_MISSION, Priority.STORY);
+					QueueVoiceLine(Emotion.LIGHTBULB, VoiceClip.HOW_TO_HELM, Priority.STORY);
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.SPACE_TO_TAKEOFF, Priority.STORY);
+					questLog1.text = "Go to the helm and takeoff";
 					ObjectiveMarker.the.target = objectiveHelm;
 					break;
 				case StoryPhase.FLY_TO_MISSION1:
-					QueueVoiceLine(Emotion.LIGHTBULB, VoiceClip.HOW_TO_HELM, Priority.STORY);
-					QueueVoiceLine(Emotion.HAPPY, VoiceClip.SPACE_TO_TAKEOFF, Priority.STORY);
 					QueueVoiceLine(Emotion.THINKING, VoiceClip.OTHER_CONTROLS, Priority.STORY);
 					QueueVoiceLine(Emotion.SCAN, VoiceClip.MISSION_QUEST_MARKER, Priority.STORY);
 
 					QueueVoiceLine(Emotion.HAPPY, VoiceClip.CHAT3, Priority.CHAT);
 					QueueVoiceLine(Emotion.CUTE, VoiceClip.CHAT4, Priority.CHAT);
+					questLog1.text = "Fly to the postbox";
 					ObjectiveMarker.the.target = objectiveMission;
 					break;
 				case StoryPhase.FLY_TO_REFUEL:
 					QueueVoiceLine(Emotion.LIGHTBULB, VoiceClip.IM_THIRSTY, Priority.STORY);
 					QueueVoiceLine(Emotion.DIZZY, VoiceClip.CAN_GET_FUEL, Priority.STORY);
 					QueueVoiceLine(Emotion.THINKING, VoiceClip.FUELING_STATION_OVER_THERE, Priority.STORY);
+					questLog1.text = "Fly to the postbox";
+					questLog1.fontStyle = TMPro.FontStyles.Strikethrough;
+					questLog2.text = "Fly to the fuel station";
 					ObjectiveMarker.the.target = objectiveFuelAsteroid;
 					break;
 				case StoryPhase.GET_FUEL_CAN:
 					QueueVoiceLine(Emotion.PERFECT10, VoiceClip.PERFECT_LANDING, Priority.STORY);
 					QueueVoiceLine(Emotion.HAPPY, VoiceClip.GRAB_A_FUEL, Priority.STORY);
-					QueueVoiceLine(Emotion.HAPPY, VoiceClip.CHAT5, Priority.CHAT);
+					//QueueVoiceLine(Emotion.HAPPY, VoiceClip.CHAT5, Priority.CHAT);
+					questLog1.text = "Fly to the postbox";
+					questLog1.fontStyle = TMPro.FontStyles.Strikethrough;
+					questLog2.text = "Pick up the fuel can";
 					ObjectiveMarker.the.target = objectiveFuelCan;
 					break;
-			}
+				case StoryPhase.PLACE_FUEL_CAN:
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.PUT_IT_IN_THE_FUEL_HATCH, Priority.STORY);
+					questLog1.text = "Fly to the postbox";
+					questLog1.fontStyle = TMPro.FontStyles.Strikethrough;
+					questLog2.text = "Fill the fuel intake";
+					ObjectiveMarker.the.target = objectiveFuelDropoff;
+					break;
+				case StoryPhase.FLY_TO_MISSION2:
+					QueueVoiceLine(Emotion.TICK, VoiceClip.BACK_TO_THE_MISSION, Priority.STORY);
+					QueueVoiceLine(Emotion.PERFECT10, VoiceClip.GETTING_CLOSE, Priority.STORY);
+					QueueVoiceLine(Emotion.CUTE, VoiceClip.LOOK_AT_THAT_LOVELY_THING, Priority.STORY);
+					QueueVoiceLine(Emotion.NEAR_DEATH_EXPERIENCE, VoiceClip.CHAT6, Priority.CHAT);
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.CHAT7, Priority.CHAT);
+					questLog1.text = "Fly to the postbox";
+					ObjectiveMarker.the.target = objectiveMission;
+					break;
+				case StoryPhase.PICKUP_CHEST:
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.GRAB_CHEST, Priority.STORY);
+					ObjectiveMarker.the.target = objectiveChest;
+					questLog1.text = "Find the chest in the hold";
+					break;
+				case StoryPhase.LOOK_AT_CHEST:
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.LIFT, Priority.STORY);
+					questLog1.text = "Pick up the chest";
+					ObjectiveMarker.the.target = objectiveChest;
+					break;
+				case StoryPhase.DROPOFF_CHEST:
+					QueueVoiceLine(Emotion.THINKING, VoiceClip.PUT_IN_POSTBOX, Priority.STORY);
+					questLog1.text = "Put the chest in the postbox";
+					ObjectiveMarker.the.target = objectivePostbox;
+					break;
+				case StoryPhase.FLY_TO_DOOM:
+					QueueVoiceLine(Emotion.PERFECT10, VoiceClip.DELIVERY_SUCCESSFUL, Priority.STORY);
+					QueueVoiceLine(Emotion.THINKING, VoiceClip.NEW_COORDINATES, Priority.STORY);
+					QueueVoiceLine(Emotion.CRY, VoiceClip.YOU_HAVE_TO_KILL_ME, Priority.STORY);
+					QueueVoiceLine(Emotion.SAD, VoiceClip.TIME_IS_UP, Priority.STORY);
+					QueueVoiceLine(Emotion.CRY, VoiceClip.CHAT8, Priority.CHAT);
+					QueueVoiceLine(Emotion.SAD, VoiceClip.CHAT9, Priority.CHAT);
+					questLog1.text = "Fly to the postbox";
+					questLog2.text = "Visit the Rainbow Rocks";
+					questLog2.fontStyle = TMPro.FontStyles.Strikethrough;
+					ObjectiveMarker.the.target = objectiveDeath;
+					break;
+				case StoryPhase.DEATH:
+					shouldFadeOut = true;
+					endText.enabled = true;
+					endText.text = @"You succesfully delivered Robin to the SpaceCo decomissioning facility.
+Well done employee!";
+					ObjectiveMarker.the.target = null;
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.GOODBYE, Priority.STORY);
+					break;
+				case StoryPhase.LIFE:
+					shouldFadeOut = true;
+					endText.enabled = true;
+					endText.text = @"You did not successfully deliver Robing to the SpaceCo decommisioning facility.
 
-			
+A requisitioning team will be dispatched to your quadrant shortly. 
+
+This will not look good on your employee record.";
+					QueueVoiceLine(Emotion.HAPPY, VoiceClip.WE_ESCAPED, Priority.STORY);
+					ObjectiveMarker.the.target = null;
+					break;
+				case StoryPhase.PLAYER_WAS_AN_ID:
+					shouldFadeOut = true;
+					endText.enabled = true;
+					endText.text = "You were lost to the inky void";
+					QueueVoiceLine(Emotion.SAD, VoiceClip.GOODBYE, Priority.STORY);
+					ObjectiveMarker.the.target = null;
+					break;
+			}
 		}
 
 	
 	}
+
+	public ParticleSystem particles;
+	public TMPro.TextMeshProUGUI endText;
 
 	private void InformGoingWrongWay()
 	{
@@ -234,7 +333,7 @@ public class Ship : MonoBehaviour
 		public float pause = -1;
 	}
 
-	public Transform objectiveEngine, objectiveDoor, objectiveHelm, objectiveMission, objectivePostbox, objectiveFuelAsteroid, objectiveFuelCan;
+	public Transform objectiveEngine, objectiveDoor, objectiveHelm, objectiveMission, objectivePostbox, objectiveFuelAsteroid, objectiveFuelCan, objectiveFuelDropoff, objectiveDeath, objectiveChest;
 
 	private StoryPhase phase = (StoryPhase)(-1);
 	private List<NextClip> clipsToPlay = new List<NextClip>();
@@ -294,7 +393,7 @@ public class Ship : MonoBehaviour
 
 			if(next.priority == Priority.STORY)
 			{
-				waitTimer = Random.Range(5.0f, 15.0f);
+				waitTimer = Random.Range(6.0f, 8.0f);
 			}
 		}
 		else
@@ -303,6 +402,8 @@ public class Ship : MonoBehaviour
 		}
 		currentClip = next;
 	}
+
+	public AudioSource music;
 
     // Start is called before the first frame update
     void Start()
@@ -314,27 +415,38 @@ public class Ship : MonoBehaviour
 		fadeInTimeRemaining = 10.0f;
 
 		TriggerStoryPhase(StoryPhase.INTRO);
+		particles.Stop();
 	}
+
+	bool shouldFadeOut = false;
 
     // Update is called once per frame
     void Update()
     {
-		if(fadeInTimeRemaining > 0.0f)
+		if (shouldFadeOut)
 		{
-			if (fadeInTimeRemaining >= 6.5f
-				&& fadeInTimeRemaining - Time.deltaTime < 6.5f)
-			{
-				explosion.Play();
-			}
-
-
-			fadeInTimeRemaining -= Time.deltaTime;
-			if (fadeInTimeRemaining < 0.0f)
-				fadeInTimeRemaining = 0.0f;
-
-
-
+			fadeInTimeRemaining += Time.deltaTime;
 			fadeToBlack.color = new Color(0f, 0f, 0f, Mathf.Clamp01(fadeInTimeRemaining / 5.0f));
+		}
+		else
+		{
+			if (fadeInTimeRemaining > 0.0f)
+			{
+				if (fadeInTimeRemaining >= 6.5f
+					&& fadeInTimeRemaining - Time.deltaTime < 6.5f)
+				{
+					explosion.Play();
+				}
+
+
+				fadeInTimeRemaining -= Time.deltaTime;
+				if (fadeInTimeRemaining < 0.0f)
+					fadeInTimeRemaining = 0.0f;
+
+
+
+				fadeToBlack.color = new Color(0f, 0f, 0f, Mathf.Clamp01(fadeInTimeRemaining / 5.0f));
+			}
 		}
 
 		for (int i = clipsToPlay.Count - 1; i >= 0; i--)
@@ -368,6 +480,7 @@ public class Ship : MonoBehaviour
 				// Free flight, use motion and inputs
 				transform.eulerAngles = new Vector3(-pitch, yaw, 0.0f);
 				transform.position += transform.rotation * motion * Time.deltaTime;
+				
 				break;
 			}
 			case State.LANDED:
@@ -401,13 +514,27 @@ public class Ship : MonoBehaviour
 		if(phase == StoryPhase.READY_TO_FLY)
 			TriggerStoryPhase(StoryPhase.FLY_TO_MISSION1);
 		state = State.FREE_FLIGHT;
-		motion.y = 10.0f;
+		particles.Play();
+		motion.y = 100.0f;
 	}
 
 	private void BeginLanding()
 	{
 		preLandingPos = transform.position;
 		preLandingRotation = transform.rotation;
+		landingProgress = 0.0f;
+		particles.Stop();
+
+		state = State.LANDING;
+		if (closestAsteroid.gameObject == objectiveMission.gameObject)
+		{
+			TriggerStoryPhase(StoryPhase.PICKUP_CHEST);
+		}
+		else if (closestAsteroid.gameObject == objectiveFuelAsteroid.gameObject)
+		{
+			TriggerStoryPhase(StoryPhase.GET_FUEL_CAN);
+		}
+
 	}
 
 	public void SetEmotion(Emotion emotion)
@@ -421,7 +548,7 @@ public class Ship : MonoBehaviour
 		switch(state)
 		{
 			case State.LANDED:
-				return "Parking brake engaged. Press SPACE to take off.";
+				return "Parking brake engaged. Press SPACE to take off. Press F to leave the helm";
 			case State.LANDING:
 				return "Parking mode engaged. Please wait for landing.";
 			case State.FREE_FLIGHT:
@@ -492,6 +619,15 @@ public class Ship : MonoBehaviour
 					timeSinceLastBrakeSnippet = 0.0f;
 				}
 
+				if(closestAsteroid != null)
+				{
+					if(Input.GetKeyDown(KeyCode.Space))
+					{
+						
+						BeginLanding();
+
+					}
+				}
 				// Pitch controls
 				/*
 				pitch = Mathf.Lerp(pitch, 0.0f, turnSpeed * Time.deltaTime);

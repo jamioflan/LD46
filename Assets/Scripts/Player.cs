@@ -22,11 +22,22 @@ public class Player : MonoBehaviour
     {
 		cc = GetComponent<CharacterController>();
 		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Confined;
     }
 
     // Update is called once per frame
     void Update()
     {
+		if(Input.GetKeyDown(KeyCode.Escape))
+		{
+			Application.Quit();
+		}
+
+		if(transform.position.y <= -50.0f)
+		{
+			Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.PLAYER_WAS_AN_ID);
+		}
+
 		string overlayText = "";
 
 		if (isAtHelm)
@@ -73,23 +84,17 @@ public class Player : MonoBehaviour
 		}
 
 		// Click to interact
-		bool drop = Input.GetMouseButtonDown(1);
-		if (isAtHelm) // Special case context senstive drop with F/E
+		if (isAtHelm)
 		{
-			drop = drop || Input.GetKeyDown(KeyCode.F) || Input.GetKeyUp(KeyCode.E);
-		}
-
-		if (drop)
-		{
-			if (isAtHelm)
+			if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyUp(KeyCode.E))
 			{
 				isAtHelm = false;
 				transform.SetParent(Ship.theShip.transform);
 			}
 		}
-		else if(!isAtHelm)
+		else
 		{
-			bool clicked = Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.E);
+			bool clicked = Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.E);
 
 			RaycastHit hit;
 			if (Physics.Raycast(new Ray(head.position, head.forward), out hit, 3.0f)
@@ -189,7 +194,75 @@ public class Player : MonoBehaviour
 						}
 					}
 				}
-					
+				else if (hit.collider.GetComponent<FuelCan>() != null)
+				{
+					if (holding == null)
+					{
+						overlayText = $"Press F to pickup {hit.collider.name}";
+						if (clicked)
+						{
+							holding = hit.collider.gameObject;
+							holding.transform.SetParent(holdPos);
+							holding.transform.localPosition = Vector3.zero;
+							holding.transform.localRotation = Quaternion.identity;
+							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.PLACE_FUEL_CAN);
+						}
+					}
+				}
+				else if(hit.collider.GetComponent<FuelReceptacle>() != null)
+				{
+					FuelReceptacle receptacle = hit.collider.GetComponent<FuelReceptacle>();
+					if(holding == null)
+					{
+						overlayText = receptacle.hasFuel ? "Nicely topped up" : "Fuel level looks rather low";
+					}
+					else if(holding.GetComponent<FuelCan>() != null)
+					{
+						overlayText = "Press F to refuel the ship";
+						if (clicked)
+						{
+							Destroy(holding);
+							holding = null;
+							receptacle.hasFuel = true;
+							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.FLY_TO_MISSION2);
+						}
+					}
+				}
+				else if(hit.collider.GetComponent<Crate>() != null)
+				{
+					if(holding == null && Ship.theShip.CanPickChest())
+					{
+						overlayText = $"Press F to pickup {hit.collider.name}";
+						Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.LOOK_AT_CHEST);
+						if (clicked)
+						{
+							holding = hit.collider.gameObject;
+							holding.transform.SetParent(holdPos);
+							holding.transform.localPosition = Vector3.zero;
+							holding.transform.localRotation = Quaternion.identity;
+							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.DROPOFF_CHEST);
+						}
+					}
+				}
+				else if (hit.collider.GetComponent<Postbox>() != null)
+				{
+					Postbox postbox = hit.collider.GetComponent<Postbox>();
+					if (holding == null)
+					{
+						overlayText = "Next collection: 17:00 Space-Tuesday";
+					}
+					else if (holding.GetComponent<Crate>() != null)
+					{
+						overlayText = $"Press F to post {hit.collider.name}";
+						if (clicked)
+						{
+							Destroy(holding);
+							holding = null;
+							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.FLY_TO_DOOM);
+						}
+					}
+				}
+
 			}
 
 			
