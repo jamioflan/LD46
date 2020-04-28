@@ -35,25 +35,25 @@ public class Player : MonoBehaviour
 
 		if(transform.position.y <= -50.0f)
 		{
-			Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.PLAYER_WAS_AN_ID);
+			//Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.PLAYER_WAS_AN_ID);
 		}
 
 		string overlayText = "";
 
 		if (isAtHelm)
 		{
-			Ship.theShip.UpdateMovementControls();
+			//Ship.theShip.UpdateMovementControls();
 			
 			transform.localPosition = Vector3.zero;
 			transform.localRotation = Quaternion.identity;
 			transform.localScale = Vector3.one;
 			head.localRotation = Quaternion.identity;
 
-			overlayText = Ship.theShip.GetOverlayText();// Press W to accelerate, A/D to turn and Space/Shift to ascend/descend. Press F to leave.";
+			//overlayText = Ship.theShip.GetOverlayText();// Press W to accelerate, A/D to turn and Space/Shift to ascend/descend. Press F to leave.";
 		}
 		else
 		{
-			Ship.theShip.NotControlling();
+			//Ship.theShip.NotControlling();
 			// Drag old motion
 			if (cc.isGrounded)
 				motion.y = 0.0f;
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.F) || Input.GetKeyUp(KeyCode.E))
 			{
 				isAtHelm = false;
-				transform.SetParent(Ship.theShip.transform);
+				//transform.SetParent(Ship.theShip.transform);
 			}
 		}
 		else
@@ -102,16 +102,16 @@ public class Player : MonoBehaviour
 			{
 				if (hit.collider.GetComponent<Helm>() != null)
 				{
-					if (Ship.theShip.CanFly())
+					//if (Ship.theShip.CanFly())
 					{
 						overlayText = "Press F to pilot the ship";
 						if (clicked)
 						{
 							isAtHelm = true;
-							transform.SetParent(Ship.theShip.standingPos);
+							//transform.SetParent(Ship.theShip.standingPos);
 						}
 					}
-					else
+					//else
 					{
 						overlayText = "Ship controls are locked";
 					}
@@ -126,8 +126,8 @@ public class Player : MonoBehaviour
 							if (clicked)
 							{
 								RearDoor.theDoor.Open();
-								if(ObjectiveMarker.the.target == Ship.theShip.objectiveDoor)
-									ObjectiveMarker.the.target = null;
+								//if(ObjectiveMarker.the.target == Ship.theShip.objectiveDoor)
+								//	ObjectiveMarker.the.target = null;
 							}
 							break;
 						case Button.Action.CLOSE_DOOR:
@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
 							if(holding.GetComponent<EnginePart>() != null)
 							{
 								overlayText = $"Press F to place {holding.name}";
-								Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.READY_TO_PLACE);
+								//Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.READY_TO_PLACE);
 								if (clicked)
 								{
 									holding.transform.SetParent(panel.socket);
@@ -163,7 +163,7 @@ public class Player : MonoBehaviour
 									holding.transform.localRotation = Quaternion.identity;
 									holding.GetComponent<EnginePart>().slideTimer = 1.0f;
 									panel.hasComponent = true;
-									Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.READY_TO_FLY);
+									//Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.READY_TO_FLY);
 									holding = null;
 								}
 							}
@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
 						else
 						{
 							overlayText = "Something's missing from this engine";
-							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.FETCH_COMPONENT);
+							//Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.FETCH_COMPONENT);
 						}
 					}
 				}
@@ -190,7 +190,7 @@ public class Player : MonoBehaviour
 							holding.transform.SetParent(holdPos);
 							holding.transform.localPosition = Vector3.zero;
 							holding.transform.localRotation = Quaternion.identity;
-							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.HAVE_COMPONENT);
+							//Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.HAVE_COMPONENT);
 						}
 					}
 				}
@@ -205,7 +205,7 @@ public class Player : MonoBehaviour
 							holding.transform.SetParent(holdPos);
 							holding.transform.localPosition = Vector3.zero;
 							holding.transform.localRotation = Quaternion.identity;
-							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.PLACE_FUEL_CAN);
+							//Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.PLACE_FUEL_CAN);
 						}
 					}
 				}
@@ -224,23 +224,23 @@ public class Player : MonoBehaviour
 							Destroy(holding);
 							holding = null;
 							receptacle.hasFuel = true;
-							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.FLY_TO_MISSION2);
+							//Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.FLY_TO_MISSION2);
 						}
 					}
 				}
 				else if(hit.collider.GetComponent<Crate>() != null)
 				{
-					if(holding == null && Ship.theShip.CanPickChest())
+					if(holding == null)// && Ship.theShip.CanPickChest())
 					{
 						overlayText = $"Press F to pickup {hit.collider.name}";
-						Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.LOOK_AT_CHEST);
+						//Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.LOOK_AT_CHEST);
 						if (clicked)
 						{
 							holding = hit.collider.gameObject;
 							holding.transform.SetParent(holdPos);
 							holding.transform.localPosition = Vector3.zero;
 							holding.transform.localRotation = Quaternion.identity;
-							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.DROPOFF_CHEST);
+							//Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.DROPOFF_CHEST);
 						}
 					}
 				}
@@ -258,7 +258,7 @@ public class Player : MonoBehaviour
 						{
 							Destroy(holding);
 							holding = null;
-							Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.FLY_TO_DOOM);
+							//Ship.theShip.TriggerStoryPhase(Ship.StoryPhase.FLY_TO_DOOM);
 						}
 					}
 				}
@@ -268,6 +268,6 @@ public class Player : MonoBehaviour
 			
 		}
 
-		TheText.the.text.text = overlayText;
+		//TheText.the.text.text = overlayText;
 	}
 }

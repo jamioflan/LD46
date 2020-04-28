@@ -1,0 +1,26 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl stone
+Kd 0.643 0.165 0.165
+
+newmtl stoneDark
+Kd 0.247 0.047 0.078
+
+newmtl dark
+Kd 0.315 0.12 0.314
+
+newmtl metalPurple
+Kd 0.29 0.075 0.259
+
+newmtl _defaultMat
+Kd 0.016 0.001 0.009
+
+newmtl metalDark
+Kd 0 0 0
+
+newmtl metal
+Kd 0.643 0.165 0.165
+
+newmtl stoneLight
+Kd 0.29 0.075 0.259
+

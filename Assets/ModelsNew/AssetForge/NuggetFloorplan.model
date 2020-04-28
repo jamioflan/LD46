@@ -1,0 +1,28 @@
+# Made using Asset Forge (2.0 preview-1b)
+
+:materials
+
+[name:bricks;color:RGBA(1.000, 0.392, 0.306, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:stone;color:RGBA(0.580, 0.569, 0.769, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+
+:models
+
+[name:;collection:Buildings;type:roof_flatCenter;position:(-1.0000, 1.0000, -1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(0.0000, 0.0000, -1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(1.0000, 0.0000, -2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(-1.0000, 0.0000, -2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(0.0000, 0.0000, -3.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Castles;type:stairs_stone;position:(-0.2400, 0.0000, -1.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(1.3000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:stone;]
+[name:;collection:Castles;type:stairs_stone;position:(0.2600, 1.0000, -1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.3000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:stone;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(1.0000, 1.0000, -1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(0.0000, 0.0000, -2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(1.0000, 1.9000, -2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(-1.0000, 1.9000, -2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(0.0000, 1.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(0.0000, 1.0000, 1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(-1.0000, 1.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(1.0000, 1.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(-1.0000, 1.0000, 1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(1.0000, 1.0000, 1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(0.0000, 1.9000, -2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]
+[name:;collection:Buildings;type:roof_flatCenter;position:(0.0000, 1.9000, -3.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:bricks;]

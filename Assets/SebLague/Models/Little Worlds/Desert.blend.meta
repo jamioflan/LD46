@@ -1,0 +1,241 @@
+fileFormatVersion: 2
+guid: 5e9fdd50c67ae4b318131fe99fd22854
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Area
+    100002: Circle
+    100004: Circle.001
+    100006: Circle.002
+    100008: Circle.003
+    100010: Circle.004
+    100012: Circle.005
+    100014: Circle.006
+    100016: Circle.007
+    100018: Cube
+    100020: Cube.001
+    100022: Cube.002
+    100024: Cube.003
+    100026: Cube.004
+    100028: Cube.005
+    100030: Cube.006
+    100032: Cube.007
+    100034: //RootNode
+    100036: Icosphere.000
+    100038: Icosphere.001
+    100040: Icosphere.002
+    100042: Icosphere.004
+    100044: Icosphere.008
+    100046: Plane
+    100048: Sky
+    400000: Area
+    400002: Circle
+    400004: Circle.001
+    400006: Circle.002
+    400008: Circle.003
+    400010: Circle.004
+    400012: Circle.005
+    400014: Circle.006
+    400016: Circle.007
+    400018: Cube
+    400020: Cube.001
+    400022: Cube.002
+    400024: Cube.003
+    400026: Cube.004
+    400028: Cube.005
+    400030: Cube.006
+    400032: Cube.007
+    400034: //RootNode
+    400036: Icosphere.000
+    400038: Icosphere.001
+    400040: Icosphere.002
+    400042: Icosphere.004
+    400044: Icosphere.008
+    400046: Plane
+    400048: Sky
+    2300000: Circle
+    2300002: Circle.001
+    2300004: Circle.002
+    2300006: Circle.003
+    2300008: Circle.004
+    2300010: Circle.005
+    2300012: Circle.006
+    2300014: Circle.007
+    2300016: Cube
+    2300018: Cube.001
+    2300020: Cube.002
+    2300022: Cube.003
+    2300024: Cube.004
+    2300026: Cube.005
+    2300028: Cube.006
+    2300030: Cube.007
+    2300032: Icosphere.000
+    2300034: Icosphere.001
+    2300036: Icosphere.002
+    2300038: Icosphere.004
+    2300040: Icosphere.008
+    2300042: Plane
+    2300044: Sky
+    3300000: Circle
+    3300002: Circle.001
+    3300004: Circle.002
+    3300006: Circle.003
+    3300008: Circle.004
+    3300010: Circle.005
+    3300012: Circle.006
+    3300014: Circle.007
+    3300016: Cube
+    3300018: Cube.001
+    3300020: Cube.002
+    3300022: Cube.003
+    3300024: Cube.004
+    3300026: Cube.005
+    3300028: Cube.006
+    3300030: Cube.007
+    3300032: Icosphere.000
+    3300034: Icosphere.001
+    3300036: Icosphere.002
+    3300038: Icosphere.004
+    3300040: Icosphere.008
+    3300042: Plane
+    3300044: Sky
+    4300000: Plane
+    4300002: Sky
+    4300004: Circle
+    4300006: Circle.001
+    4300008: Circle.002
+    4300010: Circle.003
+    4300012: Circle.004
+    4300014: Circle.005
+    4300016: Circle.006
+    4300018: Circle.007
+    4300020: Cube
+    4300022: Cube.001
+    4300024: Cube.002
+    4300026: Cube.003
+    4300028: Cube.004
+    4300030: Cube.005
+    4300032: Cube.006
+    4300034: Cube.007
+    4300036: Icosphere.001
+    4300038: Icosphere.004
+    4300040: Icosphere.008
+    4300042: Icosphere.000
+    4300044: Icosphere.002
+    10800000: Area
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cactus
+    second: {fileID: 2100000, guid: 23a1c2d0ec50c4b8b872911340dcb1df, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cactus2
+    second: {fileID: 2100000, guid: 67fe6628ef8d64ae9ab9569512696be2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grass
+    second: {fileID: 2100000, guid: cc4e08d565cf34effbf9ea13162cd4d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rock
+    second: {fileID: 2100000, guid: df02f6cf57bfd4082a391472dee82af8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sand
+    second: {fileID: 2100000, guid: c0060a3808ce7499fb6558210d4065af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sky
+    second: {fileID: 2100000, guid: e07b8ab8a81ff4ecfb8b383690e4672e, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,20 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl stoneDark
+Kd 0.2459772 0.04565484 0.07881185
+
+newmtl stone
+Kd 0.6425289 0.163066 0.163066
+
+newmtl bricks
+Kd 0.6770117 0.4673288 0.3846657
+
+newmtl _defaultMat
+Kd 0.07931053 0.07931053 0.07931053
+
+newmtl metalPurple
+Kd 0.4816095 0 0.07971517
+
+newmtl dark
+Kd 0.2172416 0.1436416 0.1094437
+

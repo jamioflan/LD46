@@ -1,0 +1,26 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl _defaultMat
+Kd 0.228 0.133 0.133
+map_Kd Textures/_defaultMat.png
+
+newmtl metalPurple
+Kd 1 0.102 0.102
+map_Kd Textures/metalPurple.png
+
+newmtl shield
+Kd 0.91 0.467 0.095
+map_Kd Textures/shield.png
+
+newmtl dark
+Kd 0.373 0.373 0.373
+map_Kd Textures/dark.png
+
+newmtl stoneDark
+Kd 0.373 0.373 0.373
+map_Kd Textures/stoneDark.png
+
+newmtl metalDark
+Kd 0.1862069 0.01851563 0.003385588
+map_Kd Textures/metalDark.png
+

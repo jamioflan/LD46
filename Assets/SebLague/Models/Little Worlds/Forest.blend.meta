@@ -1,0 +1,236 @@
+fileFormatVersion: 2
+guid: 0826725f2f13b469a8384b1245f86da3
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Area
+    100002: //RootNode
+    100004: Icosphere
+    100006: Icosphere.001
+    100008: Icosphere.002
+    100010: Icosphere.003
+    100012: Icosphere.004
+    100014: Icosphere.005
+    100016: Icosphere.006
+    100018: Icosphere.007
+    100020: Icosphere.008
+    100022: Icosphere.009
+    100024: Icosphere.010
+    100026: Plane
+    100028: Sphere
+    100030: Tree
+    100032: Tree.001
+    100034: Tree.002
+    100036: Tree.003
+    100038: Tree.004
+    100040: Tree.005
+    100042: Tree.006
+    100044: Tree.007
+    400000: Area
+    400002: //RootNode
+    400004: Icosphere
+    400006: Icosphere.001
+    400008: Icosphere.002
+    400010: Icosphere.003
+    400012: Icosphere.004
+    400014: Icosphere.005
+    400016: Icosphere.006
+    400018: Icosphere.007
+    400020: Icosphere.008
+    400022: Icosphere.009
+    400024: Icosphere.010
+    400026: Plane
+    400028: Sphere
+    400030: Tree
+    400032: Tree.001
+    400034: Tree.002
+    400036: Tree.003
+    400038: Tree.004
+    400040: Tree.005
+    400042: Tree.006
+    400044: Tree.007
+    2300000: Icosphere
+    2300002: Icosphere.001
+    2300004: Icosphere.002
+    2300006: Icosphere.003
+    2300008: Icosphere.004
+    2300010: Icosphere.005
+    2300012: Icosphere.006
+    2300014: Icosphere.007
+    2300016: Icosphere.008
+    2300018: Icosphere.009
+    2300020: Icosphere.010
+    2300022: Plane
+    2300024: Sphere
+    2300026: Tree
+    2300028: Tree.001
+    2300030: Tree.002
+    2300032: Tree.003
+    2300034: Tree.004
+    2300036: Tree.005
+    2300038: Tree.006
+    2300040: Tree.007
+    3300000: Icosphere
+    3300002: Icosphere.001
+    3300004: Icosphere.002
+    3300006: Icosphere.003
+    3300008: Icosphere.004
+    3300010: Icosphere.005
+    3300012: Icosphere.006
+    3300014: Icosphere.007
+    3300016: Icosphere.008
+    3300018: Icosphere.009
+    3300020: Icosphere.010
+    3300022: Plane
+    3300024: Sphere
+    3300026: Tree
+    3300028: Tree.001
+    3300030: Tree.002
+    3300032: Tree.003
+    3300034: Tree.004
+    3300036: Tree.005
+    3300038: Tree.006
+    3300040: Tree.007
+    4300000: Plane
+    4300002: Tree
+    4300004: Tree.001
+    4300006: Tree.002
+    4300008: Tree.003
+    4300010: Tree.004
+    4300012: Tree.005
+    4300014: Tree.006
+    4300016: Tree.007
+    4300018: Icosphere
+    4300020: Icosphere.001
+    4300022: Icosphere.002
+    4300024: Icosphere.003
+    4300026: Icosphere.004
+    4300028: Icosphere.005
+    4300030: Icosphere.006
+    4300032: Icosphere.007
+    4300034: Icosphere.008
+    4300036: Icosphere.009
+    4300038: Icosphere.010
+    4300040: Sphere
+    10800000: Area
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grass
+    second: {fileID: 2100000, guid: d2303d55b0e1442cca5fea536743fb76, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leaves
+    second: {fileID: 2100000, guid: f5f2392bc592744a6ba3672eb8dedd23, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Leaves.001
+    second: {fileID: 2100000, guid: 7adf75ffed1e643888a4d2bfbd442527, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: bbec27b58c9bc4b15a94426a5fa06866, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rock
+    second: {fileID: 2100000, guid: 16013db802122466d8291fd31e409e24, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sky
+    second: {fileID: 2100000, guid: 18c45177b1510462390855f0bc772806, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Trunk
+    second: {fileID: 2100000, guid: 63b3da371b31e486c9bd369b3da6d4d5, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

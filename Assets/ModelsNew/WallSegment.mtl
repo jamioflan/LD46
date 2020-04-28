@@ -1,0 +1,14 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl stone
+Kd 0.6431373 0.1647059 0.1647059
+
+newmtl stoneDark
+Kd 0.2470588 0.04705882 0.07843137
+
+newmtl _defaultMat
+Kd 0.872414 0.7183968 0.6675288
+
+newmtl dark
+Kd 0.1137933 0.1137933 0.1137933
+

@@ -20,7 +20,7 @@ public class CaptureSphere : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		Ship ship = other.GetComponentInParent<Ship>();
+		ShipControls ship = other.GetComponentInParent<ShipControls>();
 		if(ship != null)
 		{
 			ship.closestAsteroid = asteroid;
@@ -29,7 +29,7 @@ public class CaptureSphere : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-		Ship ship = other.GetComponentInParent<Ship>();
+		ShipControls ship = other.GetComponentInParent<ShipControls>();
 		if (ship != null)
 		{
 			ship.closestAsteroid = null;

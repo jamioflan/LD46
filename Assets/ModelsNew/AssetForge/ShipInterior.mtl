@@ -1,0 +1,50 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl _defaultMat
+Kd 0.228 0.133 0.133
+map_Kd Textures/_defaultMat.png
+
+newmtl metalPurple
+Kd 1 0.102 0.102
+map_Kd Textures/metalPurple.png
+
+newmtl shield
+Kd 0.91 0.467 0.095
+map_Kd Textures/shield.png
+
+newmtl dark
+Kd 0.373 0.373 0.373
+map_Kd Textures/dark.png
+
+newmtl stoneDark
+Kd 0.373 0.373 0.373
+map_Kd Textures/stoneDark.png
+
+newmtl bricksDark
+Kd 0.538 0.244 0.098
+map_Kd Textures/bricksDark.png
+
+newmtl bricks
+Kd 0.807 0.627 0.602
+map_Kd Textures/bricks.png
+
+newmtl stone
+Kd 0.669 0.136 0.088
+map_Kd Textures/stone.png
+
+newmtl woodLight
+Kd 0.241 0.241 0.241
+map_Kd Textures/woodLight.png
+
+newmtl wood
+Kd 0.579 0.294 0.203
+map_Kd Textures/wood.png
+
+newmtl metalDark
+Kd 0.186 0.019 0.003
+map_Kd Textures/metalDark.png
+
+newmtl metal
+Kd 1 1 1
+map_Kd Textures/metal.png
+
