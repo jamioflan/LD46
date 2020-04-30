@@ -1,0 +1,19 @@
+# Made using Asset Forge (2.0 preview-1b)
+
+:materials
+
+[name:wood;color:RGBA(0.749, 0.443, 0.345, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:woodDark;color:RGBA(0.620, 0.329, 0.235, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:_defaultMat;color:RGBA(0.939, 0.953, 1.000, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:stone;color:RGBA(0.798, 0.145, 0.145, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+
+:models
+
+[name:;collection:Western;type:porch_floorCenter;position:(0.0000, 1.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:wood;]
+[name:;collection:Walls;type:column_westernLarge;position:(0.0000, 0.0000, 0.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:wood+woodDark+_defaultMat;]
+[name:;collection:Walls;type:column_westernLarge;position:(0.0000, 0.0000, 0.0000);rotation:(0.0000, 270.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:wood+woodDark+_defaultMat;]
+[name:;collection:Walls;type:column_westernLarge;position:(0.0000, 0.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:wood+woodDark+_defaultMat;]
+[name:;collection:Walls;type:wall_eastAsianFrame;position:(0.0000, 1.1000, 0.0800);rotation:(0.0000, 0.0000, 0.0000);scale:(0.9000, 1.5000, 1.0000);group:;locked:False;hidden:False;materials:wood;]
+[name:;collection:Walls;type:column_westernLarge;position:(0.0000, 0.0000, 0.0000);rotation:(0.0000, 90.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:wood+woodDark+_defaultMat;]
+[name:;collection:Walls;type:wall;position:(0.0000, 0.6000, -0.3500);rotation:(90.0000, 0.0000, 0.0000);scale:(0.8100, 0.8000, 1.0000);group:;locked:False;hidden:False;materials:stone;]
+[name:;collection:Walls;type:wall;position:(0.0000, 1.4000, 0.1500);rotation:(0.0000, 0.0000, 0.0000);scale:(0.8100, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:stone;]

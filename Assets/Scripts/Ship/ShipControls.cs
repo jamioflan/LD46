@@ -11,8 +11,6 @@ public class ShipControls : Seat
 		LANDED,
 	}
 
-	public Transform standingPos;
-
 	// Asteroid landing procedures
 	public Asteroid closestAsteroid;
 	private State state = State.LANDED;
@@ -37,15 +35,25 @@ public class ShipControls : Seat
 
 	private Transform shipTransform;
 
-	void Start()
+	// Interactable/Seat interface
+	public override bool CanInteract()
 	{
+		return base.CanInteract();
+	}
+
+	protected override void Awake()
+	{
+		base.Awake();
+
 		if (particles != null)
 			particles.Stop();
 		shipTransform = FindObjectOfType<ShipExterior>().transform;
 	}
 
-	void Update()
+	protected override void FixedUpdate()
 	{
+		base.FixedUpdate();
+
 		// Apply rotation
 		if (leftEngine && rightEngine)
 		{
@@ -148,25 +156,22 @@ public class ShipControls : Seat
 
 
 	// Seat interface
-	public override void UpdateControlledByLocalPlayer()
+	public override void UpdateControlledByLocalPlayer(PlayerInputs inputs)
 	{
 		// Engine pitch, update as we go
 		leftPitch = 0.0f;
 		rightPitch = 0.0f;
 		moveInput = Vector3.zero;
 
-		// Get inputs
-		Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-
 		switch (state)
 		{
 			case State.FREE_FLIGHT:
 			{
-				yaw += input.x * turnSpeed;
-				helmYaw += input.x;
-				leftPitch += input.x * 30.0f;
-				rightPitch -= input.x * 30.0f;
-				moveInput = new Vector3(0.0f, 0.0f, input.y);
+				yaw += inputs.move.x * turnSpeed;
+				helmYaw += inputs.move.x;
+				leftPitch += inputs.move.x * 30.0f;
+				rightPitch -= inputs.move.x * 30.0f;
+				moveInput = new Vector3(0.0f, 0.0f, -inputs.move.z);
 				if (moveInput.sqrMagnitude > 1.0f)
 				{
 					moveInput.Normalize();
@@ -174,7 +179,7 @@ public class ShipControls : Seat
 				moveInput *= moveSpeed;
 
 				timeSinceLastBrakeSnippet += Time.deltaTime;
-				if (Mathf.Abs(input.x) > 0.0f || Mathf.Abs(input.y) > 0.0f && timeSinceLastBrakeSnippet >= 5.0f)
+				if (Mathf.Abs(inputs.move.x) > 0.0f || Mathf.Abs(inputs.move.z) > 0.0f && timeSinceLastBrakeSnippet >= 5.0f)
 				{
 					timeSinceLastBrakeSnippet = 0.0f;
 				}

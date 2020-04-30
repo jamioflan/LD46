@@ -12,7 +12,7 @@ public class PlayerCamera : MonoBehaviour
 
 	public bool IsOnShip { get; private set; }
 
-	private NewPlayer player;
+	private Player player;
 	private Camera playerCamera;
 
     void Awake()
@@ -20,7 +20,7 @@ public class PlayerCamera : MonoBehaviour
 		portals = FindObjectsOfType<OneWayRenderPortal>();
 		currentPortals = new List<OneWayRenderPortal>(4);
 		playerCamera = GetComponent<Camera>();
-		player = GetComponentInParent<NewPlayer>();
+		player = GetComponentInParent<Player>();
 	}
 
 	void OnPreCull()

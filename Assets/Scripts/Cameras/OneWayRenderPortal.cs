@@ -12,7 +12,7 @@ public class OneWayRenderPortal : MonoBehaviour
 
 	public Transform cameraSideTransform;
 	public Transform renderSideTransform;
-	public Camera renderCamera;
+	private Camera renderCamera;
 
 	[Header("Advanced Settings")]
 	public float nearClipOffset = 0.05f;
@@ -26,6 +26,7 @@ public class OneWayRenderPortal : MonoBehaviour
 	{
 		if (cameraSideTransform == null)
 			cameraSideTransform = transform;
+		renderCamera = renderSideTransform.GetComponentInChildren<Camera>();
 		renderCamera.enabled = false;
 		renderSurfaceMeshFilter = renderSurface.GetComponent<MeshFilter>();
 		renderSurface.material.SetInt("displayMask", 1);
@@ -40,7 +41,7 @@ public class OneWayRenderPortal : MonoBehaviour
 		// If we have a player check volume, then we can't show anything unless the player is in that volume
 		if (playerCheckVolume != null)
 		{
-			NewPlayer player = playerCheckVolume.Get<NewPlayer>();
+			Player player = playerCheckVolume.Get<Player>();
 			if (player == null) // TODO: == MyPlayer
 				return false;
 		}

@@ -1,0 +1,14 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl wood
+Kd 0.749 0.443 0.345
+
+newmtl woodDark
+Kd 0.62 0.329 0.235
+
+newmtl _defaultMat
+Kd 0.939 0.953 1
+
+newmtl stone
+Kd 0.7977011 0.1450366 0.1450366
+
