@@ -20,6 +20,11 @@ public class OneWayRenderPortal : MonoBehaviour
 	public float maxRenderDistance = 100.0f;
 	public TriggerVolume playerCheckVolume;
 
+	public Camera GetCamera()
+	{
+		return renderCamera;
+	}
+
 	RenderTexture viewTexture;
 
 	void Awake()

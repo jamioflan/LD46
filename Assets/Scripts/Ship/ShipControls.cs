@@ -22,7 +22,7 @@ public class ShipControls : Seat
 
 	public float turnSpeed = 0.2f;
 	public float moveSpeed = 1.0f;
-	public float yaw = 90.0f;
+	public float yaw = -90.0f;
 	public float pitch;
 	private float leftPitch, rightPitch;
 	private Vector3 moveInput;
@@ -36,9 +36,21 @@ public class ShipControls : Seat
 	private Transform shipTransform;
 
 	// Interactable/Seat interface
-	public override bool CanInteract()
+	public override string GetHoverText(Player player)
 	{
-		return base.CanInteract();
+		if(CanInteract(player))
+		{
+			return "Press F to pilot the ship";
+		}
+		else
+		{
+			return "Ship controls locked. Please perform pre-flight checks.";
+		}
+	}
+
+	public override bool CanInteract(Player player)
+	{
+		return base.CanInteract(player);
 	}
 
 	protected override void Awake()
@@ -103,7 +115,7 @@ public class ShipControls : Seat
 
 	private void BeginTakeoff()
 	{
-		Ship.CheckTakeoffTrigger();
+		Story.inst.CheckTakeoffTrigger();
 		state = State.FREE_FLIGHT;
 		if (particles != null)
 			particles.Play();
@@ -113,7 +125,7 @@ public class ShipControls : Seat
 
 	private void BeginLanding()
 	{
-		Ship.CheckLandingTrigger(closestAsteroid.gameObject);
+		Story.inst.CheckLandingTrigger(closestAsteroid.gameObject);
 		preLandingPos = shipTransform.position;
 		preLandingRotation = shipTransform.rotation;
 		landingProgress = 0.0f;

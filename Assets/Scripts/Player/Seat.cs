@@ -17,9 +17,9 @@ public abstract class Seat : Interactable
 		return null;
 	}
 
-	public override bool CanInteract()
+	public override bool CanInteract(Player player)
 	{
-		return GetPlayer() == null;
+		return player.currentSeat == null && GetPlayer() == null;
 	}
 
 	public virtual void ServerPlayerEnter(Player player) { }

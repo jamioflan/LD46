@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-	public virtual string GetHoverText() { return $"Interact with {name}"; }
+	public virtual string GetHoverText(Player player) { return $"Interact with {name}"; }
 
-	public abstract bool CanInteract();
+	public abstract bool CanInteract(Player player);
 
 	public void ClientRequestInteract(Player player)
 	{

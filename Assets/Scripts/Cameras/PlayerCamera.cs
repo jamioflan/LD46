@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
+	public static PlayerCamera inst;
+
 	public OneWayRenderPortal[] portals;
 	public List<OneWayRenderPortal> currentPortals;
-
-	public GameObject externalShipMesh;
-	public TriggerVolume wholeShipVolume;
-
-	public bool IsOnShip { get; private set; }
 
 	private Player player;
 	private Camera playerCamera;
 
+	public Camera GetPortalCameraCurrentlyInUse()
+	{
+		return currentPortals.Count > 0 ? currentPortals[0].GetCamera() : null;
+	}
+
     void Awake()
     {
+		inst = this;
+
 		portals = FindObjectsOfType<OneWayRenderPortal>();
 		currentPortals = new List<OneWayRenderPortal>(4);
 		playerCamera = GetComponent<Camera>();
@@ -30,20 +34,13 @@ public class PlayerCamera : MonoBehaviour
 			if (portal.Visible(playerCamera))
 				currentPortals.Add(portal);
 
-		Debug.Assert(currentPortals.Count <= 1, $"Two or more portals visible on screen this frame");
+		//Debug.Assert(currentPortals.Count <= 1, $"Two or more portals visible on screen this frame");
 
 		foreach(OneWayRenderPortal portal in currentPortals)
 		{
 			portal.PrePortalRender(playerCamera);
 			portal.Render(playerCamera);
 			portal.PostPortalRender(playerCamera);
-		}
-
-		if(IsOnShip != wholeShipVolume.Contains(player))
-		{
-			IsOnShip = !IsOnShip;
-			Debug.Log($"IsOnShip changed to {IsOnShip}");
-			externalShipMesh.SetActive(!IsOnShip);
 		}
 	}
 

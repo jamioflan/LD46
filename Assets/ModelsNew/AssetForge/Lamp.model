@@ -1,0 +1,15 @@
+# Made using Asset Forge (2.0 preview-1b)
+
+:materials
+
+[name:stoneDark;color:RGBA(0.016, 0.016, 0.016, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:stone;color:RGBA(0.746, 0.633, 0.065, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:glass;color:RGBA(1.000, 1.000, 1.000, 1.000);shader:Unlit;]
+[name:tan;color:RGBA(0.933, 0.835, 0.663, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:woodLight;color:RGBA(0.816, 0.580, 0.420, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:bricks;color:RGBA(1.000, 0.392, 0.306, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+
+:models
+
+[name:;collection:Hexagons;type:hexagon_ring;position:(0.0000, -0.0500, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(0.2000, 0.1000, 0.2000);group:;locked:False;hidden:False;materials:stoneDark;]
+[name:;collection:Swords;type:hilt_handle_guard;position:(0.0000, -0.4500, 0.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:stone+glass;]

@@ -5,6 +5,11 @@ public class Player : PortalTraveller
 {
 	public static List<Player> players = new List<Player>(4);
 
+	public static Player LocalPlayer { get { return players[0]; } }
+
+	public bool IsInsideShip
+		{ get { return ShipManager.inst.wholeShipVolume.Contains(this); } }
+
 	// --------------------------------------------------------------------------------
 	// Seats & LargeItems
 	// --------------------------------------------------------------------------------
@@ -153,6 +158,11 @@ public class Player : PortalTraveller
 		motion += transform.rotation * inputs.move * moveSpeed;
 		motion.y -= 3.0f;
 		cc.Move(motion * Time.deltaTime);
+
+		if (transform.position.y <= -50.0f)
+		{
+			Story.inst.TriggerStoryPhase(Story.StoryPhase.PLAYER_WAS_AN_ID);
+		}
 	}
 
 	private void UpdateCursor()
@@ -182,13 +192,15 @@ public class Player : PortalTraveller
 		// Update the current hover target
 		if (hoveringOver != null)
 		{
-			hoverText = hoveringOver.GetHoverText();
+			hoverText = hoveringOver.GetHoverText(this);
 
-			if(inputs.interact && hoveringOver.CanInteract())
+			if(inputs.interact && hoveringOver.CanInteract(this))
 			{
 				hoveringOver.ClientRequestInteract(this);
 			}
 		}
+
+		TheText.the.text.text = hoverText;
 	}
 
 	private void UpdateSeatedPosition()
@@ -234,8 +246,10 @@ public class Player : PortalTraveller
 		if (currentSeat == null)
 		{
 			UpdateMotion();
-			if(currentLargeItem != null)
+			
+			if (currentLargeItem != null)
 			{
+				UpdateCursor();
 				UpdateHeldItemPos();
 				currentLargeItem.UpdateHeldByLocalPlayer(inputs);
 				UpdateDropItem();
@@ -243,7 +257,7 @@ public class Player : PortalTraveller
 			else
 			{
 				UpdateCursor();
-			}
+			}	
 		}
 		else
 		{

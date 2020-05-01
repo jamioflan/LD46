@@ -1,0 +1,24 @@
+# Made using Asset Forge (2.0 preview-1b)
+
+:materials
+
+[name:_defaultMat;color:RGBA(0.861, 0.324, 0.075, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:dark;color:RGBA(0.080, 0.084, 0.097, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:wood;color:RGBA(0.131, 0.025, 0.025, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:metalLight;color:RGBA(0.947, 0.850, 0.362, 1.000);shader:Standard;valueA:0.35;valueB:0.5;]
+[name:metalGreen;color:RGBA(0.097, 0.847, 0.047, 1.000);shader:Standard;valueA:0.35;valueB:0.75;]
+
+:models
+
+[name:;collection:Primitives;type:cylinder;position:(0.0000, 0.5000, 0.0000);rotation:(0.0000, 90.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:Group_1;locked:False;hidden:False;materials:_defaultMat;]
+[name:;collection:Primitives;type:sphere_half;position:(0.0000, 1.5000, 0.0000);rotation:(0.0000, 90.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:Group_1;locked:False;hidden:False;materials:_defaultMat;]
+[name:;collection:Ships;type:detail_chimney;position:(0.0000, 0.5000, 0.2000);rotation:(270.0000, 180.0000, 0.0000);scale:(1.0001, 0.5000, 1.0000);group:Group_1;locked:False;hidden:False;materials:dark+_defaultMat;]
+[name:;collection:Swords;type:hilt_handle;position:(0.2000, 1.0000, 0.0000);rotation:(0.0000, 0.0000, 270.0000);scale:(1.0000, 1.0000, 1.0000);group:Group_1;locked:False;hidden:False;materials:dark+_defaultMat;]
+[name:;collection:Vehicles;type:detail_rollbar;position:(0.0000, 0.0000, 0.0000);rotation:(0.0000, 90.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:Group_1;locked:False;hidden:False;materials:wood;]
+[name:;collection:Vehicles;type:detail_rollbar;position:(0.0000, 0.0000, 0.0000);rotation:(0.0000, 270.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:Group_1;locked:False;hidden:False;materials:wood;]
+[name:;collection:Aircraft;type:gear_slant;position:(0.0000, 0.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:Group_1;locked:False;hidden:False;materials:_defaultMat;]
+[name:;collection:Ships;type:detail_tire;position:(0.0000, 1.8080, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 2.6000, 1.0000);group:Group_1;locked:False;hidden:False;materials:dark;]
+[name:;collection:Ships;type:mast_bottomDetailed;position:(0.0000, 2.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:Group_1;locked:False;hidden:False;materials:metalLight+dark;]
+[name:;collection:Primitives;type:sphere_half;position:(0.0000, 0.5000, 0.0000);rotation:(0.0000, 270.0000, 180.0000);scale:(1.0000, 1.0000, 1.0000);group:Group_1;locked:False;hidden:False;materials:_defaultMat;]
+[name:;collection:Vehicles;type:wheel_classic;position:(0.0000, 0.5000, 1.1000);rotation:(0.0000, 270.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:Group_0;locked:False;hidden:False;materials:dark+metalLight+metalGreen;]
+[name:;collection:Vehicles;type:bumper;position:(-0.2500, 0.5000, 0.4000);rotation:(0.0000, 0.0000, 270.0000);scale:(0.3000, 0.5000, 1.0000);group:Group_0;locked:False;hidden:False;materials:metalLight;]

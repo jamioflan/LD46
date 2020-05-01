@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ShipAction
+public enum ButtonAction
 {
 	OPEN_DOOR,
 	CLOSE_DOOR,
@@ -10,15 +10,22 @@ public enum ShipAction
 
 public class Button : Interactable
 {
-	public ShipAction action;
+	public ButtonAction action;
+	public ButtonTarget target;
+	public string hoverText;
 
-	public override bool CanInteract()
+	public override string GetHoverText(Player player) { return hoverText; }
+
+	public override bool CanInteract(Player player)
 	{
-		return true;
+		return target != null && target.CanPressButton(action);
 	}
 
 	public override void ServerInteract(Player player)
 	{
-		
+		if(target != null)
+		{
+			target.PressButton(action);
+		}
 	}
 }

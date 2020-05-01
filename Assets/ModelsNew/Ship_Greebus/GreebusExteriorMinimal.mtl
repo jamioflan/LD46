@@ -1,0 +1,14 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl metalPurple
+Kd 0.614 0.21 0.177
+
+newmtl _defaultMat
+Kd 0.353 0.579 0.147
+
+newmtl metal
+Kd 0.252 0.03 0.03
+
+newmtl dark
+Kd 0.052 0.073 0.148
+
