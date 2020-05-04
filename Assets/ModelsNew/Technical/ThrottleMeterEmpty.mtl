@@ -1,0 +1,8 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl stone
+Kd 0 0 0
+
+newmtl custom4
+Kd 0.183 0.183 0.183
+

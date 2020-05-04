@@ -83,8 +83,11 @@ public class Player : PortalTraveller
 
 	private void UpdateHeldItemPos()
 	{
-		currentLargeItem.transform.position = holdPos.position;
-		currentLargeItem.transform.rotation = holdPos.rotation;
+		if (currentLargeItem != null)
+		{
+			currentLargeItem.transform.position = holdPos.position;
+			currentLargeItem.transform.rotation = holdPos.rotation;
+		}
 	}
 
 	// --------------------------------------------------------------------------------
@@ -94,26 +97,37 @@ public class Player : PortalTraveller
 
 	private void GatherInputs()
 	{
+		inputs.BeginGathering();
+
 		// Mouse movement should be calculated cumulatively, so as to not miss any motion
 		inputs.mouseDelta.x += Input.GetAxis("Mouse X") * mouseSensitivity;
 		inputs.mouseDelta.y += Input.GetAxis("Mouse Y") * mouseSensitivity;
 
 		// Directional input is constant and should not be summed
-		inputs.move.x = Input.GetAxis("Horizontal");
+		inputs.move.x = Input.GetAxis("MoveX");
 		inputs.move.y = 0.0f;
-		inputs.move.z = Input.GetAxis("Vertical");
+		inputs.move.z = Input.GetAxis("MoveZ");
 		if (inputs.move.sqrMagnitude > 1.0f)
 		{
 			inputs.move.Normalize();
 		}
 
+		inputs.throttle += Input.GetAxis("Throttle");
+
+		inputs.rotate.x = Input.GetAxis("Roll");
+		inputs.rotate.y = Input.GetAxis("Yaw");
+		inputs.rotate.z = Input.GetAxis("Pitch");
+
 		if (Input.GetAxis("Interact") > 0)
 			inputs.interact.Press();
+
+		if (Input.GetAxis("Jump") > 0)
+			inputs.jump.Press();
 	}
 
 	private void ClearInputsForNextFrame()
 	{
-		inputs.NextFrame();
+		inputs.ClearInputs();
 	}
 
 	private void UpdateUniversalInputs()
@@ -249,10 +263,13 @@ public class Player : PortalTraveller
 			
 			if (currentLargeItem != null)
 			{
-				UpdateCursor();
-				UpdateHeldItemPos();
-				currentLargeItem.UpdateHeldByLocalPlayer(inputs);
-				UpdateDropItem();
+				UpdateCursor(); // We can drop our item while interacting, so re-check
+				if (currentLargeItem != null)
+				{
+					UpdateHeldItemPos();
+					currentLargeItem.UpdateHeldByLocalPlayer(inputs);
+					UpdateDropItem();
+				}
 			}
 			else
 			{

@@ -34,7 +34,7 @@ public class OnScreenObjectiveMarker : MonoBehaviour
 
 			Vector3 ray = objectivePosition - viewer.transform.position;
 			bool behind = Vector3.Dot(ray, viewer.transform.forward) < 0.0f;
-
+			Debug.DrawRay(viewer.transform.position, ray, behind ? Color.red : Color.green);
 
 			Vector2 screenPos = viewer.WorldToScreenPoint(objectivePosition);
 

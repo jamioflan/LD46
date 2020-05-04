@@ -24,7 +24,7 @@ public class ShipManager : MonoBehaviour
 
 	public Vector3 WorldSpaceToShipSpace(Vector3 worldSpace)
 	{
-		return exteriorReferencePoint.localToWorldMatrix * interiorReferencePoint.worldToLocalMatrix * worldSpace;
+		return interiorReferencePoint.localToWorldMatrix * exteriorReferencePoint.worldToLocalMatrix * worldSpace;
 	}
 
 	void Awake()

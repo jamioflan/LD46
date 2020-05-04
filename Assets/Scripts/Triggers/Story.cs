@@ -235,7 +235,7 @@ This will not look good on your employee record.";
     {
 		inst = this;
 
-		fadeInTimeRemaining = 10.0f;
+		fadeInTimeRemaining = 1.0f;
 		TriggerStoryPhase(StoryPhase.INTRO);
 	}
 
@@ -272,7 +272,7 @@ This will not look good on your employee record.";
 				OnScreenObjectiveMarker.the.target = currentObjectiveMarker.isInsideShip ?
 					ShipManager.inst.ShipSpaceToWorldSpace(currentObjectiveMarker.transform.position) :
 					ShipManager.inst.WorldSpaceToShipSpace(currentObjectiveMarker.transform.position);
-				OnScreenObjectiveMarker.the.viewer = PlayerCamera.inst.GetPortalCameraCurrentlyInUse();
+				OnScreenObjectiveMarker.the.viewer = Camera.main;// PlayerCamera.inst.GetPortalCameraCurrentlyInUse();
 			}
 			else
 			{

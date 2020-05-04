@@ -1,0 +1,23 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl stone
+Kd 0 0 0
+
+newmtl custom4
+Kd 0.183 0.183 0.183
+
+newmtl _defaultMat
+Kd 1 0.317 0
+
+newmtl bricksDark
+Kd 1 0 0
+
+newmtl bricks
+Kd 1 0.938 0
+
+newmtl custom7
+Kd 0.614 1 0
+
+newmtl custom2
+Kd 0.166 1 0
+

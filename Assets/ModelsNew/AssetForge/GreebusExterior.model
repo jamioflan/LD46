@@ -3,7 +3,7 @@
 :materials
 
 [name:metal;color:RGBA(0.252, 0.030, 0.030, 1.000);shader:Standard;valueA:0.35;valueB:0.5;]
-[name:_defaultMat;color:RGBA(0.353, 0.579, 0.147, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:_defaultMat;color:RGBA(0.353, 0.580, 0.145, 1.000);shader:Standard;valueA:0.35;valueB:0;]
 [name:metalPurple;color:RGBA(0.614, 0.210, 0.177, 1.000);shader:Standard;valueA:0.35;valueB:0;]
 [name:dark;color:RGBA(0.052, 0.073, 0.148, 1.000);shader:Standard;valueA:0.35;valueB:0;]
 [name:glass;color:RGBA(1.000, 1.000, 1.000, 1.000);shader:Unlit;]
@@ -38,7 +38,8 @@
 [name:;collection:Greebles;type:detail_pipesSmall;position:(-0.3000, 0.2000, 1.8000);rotation:(90.0000, 0.0000, 0.0000);scale:(1.5000, 1.5000, 1.5000);group:;locked:False;hidden:False;materials:metal;]
 [name:;collection:Greebles;type:detail_pipe;position:(0.5000, 0.7000, -0.7000);rotation:(0.0198, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:metal;]
 [name:;collection:Greebles;type:detail_pipe;position:(-0.5000, 0.7000, -0.7000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:metal;]
-[name:;collection:Aircraft;type:wing_slantWinglet;position:(-0.9000, 0.0000, 1.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(-0.8000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+metalPurple;]
-[name:;collection:Aircraft;type:wing_slantWinglet;position:(0.9000, 0.0000, 1.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(0.8000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+metalPurple;]
+[name:;collection:Aircraft;type:wing_slantWinglet;position:(-0.9000, 0.0000, 1.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(-0.8000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:metalPurple+_defaultMat;]
+[name:;collection:Aircraft;type:wing_slantWinglet;position:(0.9000, 0.0000, 1.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(0.8000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:metalPurple+_defaultMat;]
 [name:;collection:Blasters;type:attachment_handle;position:(0.0000, 0.9000, -0.7000);rotation:(0.0000, 0.0000, 0.0000);scale:(0.5000, 0.5000, 0.5000);group:;locked:False;hidden:False;materials:metal+metalPurple+dark;]
 [name:;collection:Blasters;type:clipBarrel_large;position:(0.0000, 0.5000, -1.5000);rotation:(0.0000, 0.0000, 0.0000);scale:(0.5000, 0.5000, 0.5000);group:;locked:False;hidden:False;materials:metal+dark;]
+[name:;collection:Aircraft;type:hull_tailSmall;position:(0.0000, -0.4000, -0.7000);rotation:(0.0000, 90.0000, 0.0000);scale:(1.0000, 1.0000, 2.2000);group:;locked:False;hidden:False;materials:dark+_defaultMat;]

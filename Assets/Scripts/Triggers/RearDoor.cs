@@ -10,7 +10,7 @@ public class RearDoor : ButtonTarget
 	void Update()
     {
 		progress = Mathf.Lerp(progress, target, speed * Time.deltaTime);
-		transform.localEulerAngles = new Vector3(Mathf.LerpAngle(0.0f, 120.0f, progress), 0.0f, 0.0f);
+		transform.localEulerAngles = new Vector3(Mathf.LerpAngle(0.0f, 120.0f, progress), 180.0f, 0.0f);
 	}
 
 	public override bool CanPressButton(ButtonAction action)
