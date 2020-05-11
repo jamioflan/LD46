@@ -123,6 +123,12 @@ public class Player : PortalTraveller
 
 		if (Input.GetAxis("Jump") > 0)
 			inputs.jump.Press();
+
+		if (Input.GetAxis("Select1") > 0)
+			inputs.select1.Press();
+
+		if (Input.GetAxis("Select2") > 0)
+			inputs.select2.Press();
 	}
 
 	private void ClearInputsForNextFrame()

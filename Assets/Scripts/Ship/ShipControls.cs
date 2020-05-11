@@ -4,54 +4,55 @@ using UnityEngine;
 
 public class ShipControls : Seat
 {
-	private enum State
+	private enum FlightMode
 	{
 		FREE_FLIGHT,
-		LANDING,
-		LANDED,
+		PARKING,
+		PARKED,
 	}
 
-	public enum ThrottleNotch
+	private FlightMode flightMode = FlightMode.PARKED;
+	private bool controlsLockedAfterModeSwitch = false; // Require player to take hands off all controls before the ship responds to new mode
+
+	[Header("Free Flight Mode")]
+	public float maxThrottle = 3.0f;
+	public float maxReverseThrottle = -1.0f;
+	public float turnSpeed = 0.2f;
+	public float moveSpeed = 1.0f;
+
+	private enum ThrottleNotch
 	{
 		FORWARD,
 		NEUTRAL,
 		REVERSE,
 	}
 
-	// Asteroid landing procedures
-	public Asteroid closestAsteroid;
-	private State state = State.LANDED;
-	private Vector3 preLandingPos = Vector3.zero;
-	private Quaternion preLandingRotation = Quaternion.identity;
-	private float landingProgress = 0.0f;
+	private ThrottleNotch throttleNotch = ThrottleNotch.NEUTRAL;
+	private float throttle = 0.0f;
 
-	Vector3 motion;
+	[Header("Parking Mode")]
+	public float parkModeMoveSpeed = 1.0f;
+	public float parkModeTurnSpeed = 1.0f;
+	public float parkModeVerticalSpeed = 1.0f;
+	public float parkModeVerticalSensitivity = 1.0f;
 
-	public float maxThrottle = 3.0f;
-	public float maxReverseThrottle = -1.0f;
-	public float turnSpeed = 0.2f;
-	public float moveSpeed = 1.0f;
+	private float parkModeVerticalTarget = 0.0f;
 
-
-	public float throttle = 0.0f;
-	public ThrottleNotch throttleNotch = ThrottleNotch.NEUTRAL;
-	private float yaw = -90.0f;
-	private float pitch;
-	private float leftPitch, rightPitch;
-	private Vector3 moveInput;
-	private float helmPitch, helmYaw;
-
+	[Header("Anims and Particles")]
 	public Transform leftEngine, rightEngine;
-
 	public Transform helm;
 	public ParticleSystem particles;
 
+	private float yaw = -90.0f;
+	private float pitch;
+	private float leftPitch, rightPitch;
+	private float helmPitch, helmYaw;
+
+	// Automatically established links
+	private ShipExterior shipExterior;
 	private Transform shipTransform;
 	private Rigidbody shipRigidbody;
 	private Throttle throttleAnim;
-
-	// Brake engaged voice snippet
-	private float timeSinceLastBrakeSnippet = 1.0f;
 
 	private PlayerInputs shipInputs;
 
@@ -85,42 +86,80 @@ public class ShipControls : Seat
 		return base.CanInteract(player);
 	}
 
-
-
-	private void BeginTakeoff()
+	private void RequestFlightMode(FlightMode mode)
 	{
-		Story.inst.CheckTakeoffTrigger();
-		state = State.FREE_FLIGHT;
-		if (particles != null)
-			particles.Play();
+		if (mode != flightMode)
+		{
+			Debug.Log($"[Ship] RequestFlightMode transitioning from {flightMode} to {mode}");
+			ExitFlightMode(mode);
+			EnterFlightMode(mode);
+			flightMode = mode;
 
-		motion.y = 100.0f;
+			// Clear inputs and lock until we get fresh data
+			controlsLockedAfterModeSwitch = true;
+			shipInputs = new PlayerInputs();
+		}
 	}
 
-	private void BeginLanding()
+	private void ExitFlightMode(FlightMode nextMode)
 	{
-		Story.inst.CheckLandingTrigger(closestAsteroid.gameObject);
-		preLandingPos = shipTransform.position;
-		preLandingRotation = shipTransform.rotation;
-		landingProgress = 0.0f;
-		if (particles != null)
-			particles.Stop();
+		switch(flightMode)
+		{
+			case FlightMode.PARKED:
+			{
+				Story.inst.CheckTakeoffTrigger();
+				// When taking off, give us a boost
+				//motion.y = 100.0f;
+				break;
+			}
+			case FlightMode.FREE_FLIGHT:
+			{
+				if (shipExterior.closestAsteroid != null)
+				{
+					Story.inst.CheckLandingTrigger(shipExterior.closestAsteroid.gameObject);
 
-		state = State.LANDING;
+					if (particles != null)
+						particles.Stop();
+				}
+				else
+				{
+					Debug.LogError("Can't leave free flight mode without somewhere to stop");
+				}
+				break;
+			}
+		}
+	}
+
+	private void EnterFlightMode(FlightMode nextMode)
+	{
+		switch(nextMode)
+		{
+			case FlightMode.FREE_FLIGHT:
+			{
+				if (particles != null)
+					particles.Play();
+				break;
+			}
+			case FlightMode.PARKING:
+			{
+				
+				break;
+			}
+		}
 	}
 
 	public string GetOverlayText()
 	{
-		switch (state)
+		switch (flightMode)
 		{
-			case State.LANDED:
+			case FlightMode.PARKED:
 				return "Parking brake engaged. Press SPACE to take off. Press F to leave the helm";
-			case State.LANDING:
+			case FlightMode.PARKING:
 				return "Parking mode engaged. Please wait for landing.";
-			case State.FREE_FLIGHT:
-				if (closestAsteroid != null)
+			case FlightMode.FREE_FLIGHT:
+				if (shipExterior.closestAsteroid != null)
 				{
-					return "Press SPACE to land on asteroid";
+					return "Press 1 to enter parking mode";
 				}
 				else
 				{
@@ -130,148 +169,164 @@ public class ShipControls : Seat
 		return "";
 	}
 
-	public void NotControlling()
-	{
-		moveInput = Vector3.zero;
-		leftPitch = 0.0f;
-		rightPitch = 0.0f;
-	}
-
-
 	// Seat interface
 	public override void UpdateControlledByLocalPlayer(PlayerInputs inputs)
 	{
-		shipInputs = inputs;
-		return;
-		// Engine pitch, update as we go
-		leftPitch = 0.0f;
-		rightPitch = 0.0f;
-		moveInput = Vector3.zero;
-
-		switch (state)
+		if (controlsLockedAfterModeSwitch)
 		{
-			case State.FREE_FLIGHT:
+			if (!inputs.interact && !inputs.jump && !inputs.select1 && !inputs.select2 &&
+				Mathf.Approximately(inputs.throttle, 0.0f) &&
+				Mathf.Approximately(inputs.rotate.sqrMagnitude, 0.0f) &&
+				Mathf.Approximately(inputs.move.sqrMagnitude, 0.0f))
 			{
-				yaw += inputs.move.x * turnSpeed;
-				helmYaw += inputs.move.x;
-				leftPitch += inputs.move.x * 30.0f;
-				rightPitch -= inputs.move.x * 30.0f;
-				moveInput = new Vector3(0.0f, 0.0f, -inputs.move.z);
-				if (moveInput.sqrMagnitude > 1.0f)
-				{
-					moveInput.Normalize();
-				}
-				moveInput *= moveSpeed;
-
-				timeSinceLastBrakeSnippet += Time.deltaTime;
-				if (Mathf.Abs(inputs.move.x) > 0.0f || Mathf.Abs(inputs.move.z) > 0.0f && timeSinceLastBrakeSnippet >= 5.0f)
-				{
-					timeSinceLastBrakeSnippet = 0.0f;
-				}
-
-				if (closestAsteroid != null)
-				{
-					if (Input.GetKeyDown(KeyCode.Space))
-					{
-
-						BeginLanding();
-
-					}
-				}
-				// Pitch controls
-				/*
-				pitch = Mathf.Lerp(pitch, 0.0f, turnSpeed * Time.deltaTime);
-				if (Input.GetKey(KeyCode.Space))
-				{
-					pitch = Mathf.Lerp(pitch, 30.0f, turnSpeed * Time.deltaTime);
-					leftPitch += 30.0f;
-					rightPitch += 30.0f;
-					helmPitch += 1.0f;
-				}
-				if (Input.GetKey(KeyCode.LeftShift))
-				{
-					pitch = Mathf.Lerp(pitch, -30.0f, turnSpeed * Time.deltaTime);
-					leftPitch -= 30.0f;
-					rightPitch -= 30.0f;
-					helmPitch -= 1.0f;
-				}
-
-				moveInput.y = pitch / 60.0f;
-				*/
-
-				break;
+				controlsLockedAfterModeSwitch = false;
 			}
-			case State.LANDING:
-			{
-				break;
-			}
-			case State.LANDED:
-			{
-				if (Input.GetKeyDown(KeyCode.Space))
-				{
-					BeginTakeoff();
-				}
-				break;
-			}
+		}
+		else
+		{
+			shipInputs = inputs;
 		}
 	}
 
 	private void ProcessControls()
 	{
-		// Rotation
-		shipRigidbody.AddRelativeTorque(Vector3.up * shipInputs.rotate.y * turnSpeed * shipRigidbody.mass);
-		shipRigidbody.AddRelativeTorque(Vector3.forward * shipInputs.rotate.x * turnSpeed * shipRigidbody.mass);
-		shipRigidbody.AddRelativeTorque(Vector3.right * shipInputs.rotate.z * turnSpeed * shipRigidbody.mass);
-
-		if (shipInputs.jump)
+		switch (flightMode)
 		{
-			shipRigidbody.AddForce(Vector3.up * moveSpeed * shipRigidbody.mass);
-		}
-
-		float throttleDelta = shipInputs.throttle * Time.deltaTime;
-
-		// Reset to neutral when not sending input
-		if (Mathf.Approximately(throttleDelta, 0.0f))
-		{
-			if (throttleNotch != ThrottleNotch.NEUTRAL)
-				Debug.LogWarning("Oops" + shipInputs.throttle);
-			throttleNotch = ThrottleNotch.NEUTRAL;
-		}
-		else if(throttleNotch == ThrottleNotch.NEUTRAL)
-		{
-			// We have some non-zero input. After moving, set our throttle notch so we can't go back past 0.
-			throttle += throttleDelta;
-			throttle = Mathf.Clamp(throttle, maxReverseThrottle, maxThrottle);
-
-			if (throttle > 0.0f)
-				throttleNotch = ThrottleNotch.FORWARD;
-			else if (throttle < 0.0f)
-				throttleNotch = ThrottleNotch.REVERSE;
-		}
-		else
-		{
-			// Our throttle has notched already, we are limited to a certain range
-			throttle += throttleDelta;
-			switch(throttleNotch)
+			case FlightMode.FREE_FLIGHT:
 			{
-				case ThrottleNotch.FORWARD:
-					throttle = Mathf.Clamp(throttle, 0.0f, maxThrottle);
-					break;
-				case ThrottleNotch.REVERSE:
-					throttle = Mathf.Clamp(throttle, maxReverseThrottle, 0.0f);
-					break;
-				default:
-					Debug.Log("Invalid throttle notch");
-					break;
+				// Rotation
+				shipRigidbody.AddRelativeTorque(Vector3.up * shipInputs.rotate.y * turnSpeed * shipRigidbody.mass);
+				shipRigidbody.AddRelativeTorque(Vector3.forward * shipInputs.rotate.x * turnSpeed * shipRigidbody.mass);
+				shipRigidbody.AddRelativeTorque(Vector3.right * shipInputs.rotate.z * turnSpeed * shipRigidbody.mass);
+
+				//if (shipInputs.jump)
+				//{
+				//	shipRigidbody.AddForce(Vector3.up * moveSpeed * shipRigidbody.mass);
+				//}
+
+				float throttleDelta = shipInputs.throttle * Time.deltaTime;
+
+				// Reset to neutral when not sending input
+				if (Mathf.Approximately(throttleDelta, 0.0f))
+				{
+					if (throttleNotch != ThrottleNotch.NEUTRAL)
+						Debug.LogWarning("Oops" + shipInputs.throttle);
+					throttleNotch = ThrottleNotch.NEUTRAL;
+				}
+				else if (throttleNotch == ThrottleNotch.NEUTRAL)
+				{
+					// We have some non-zero input. After moving, set our throttle notch so we can't go back past 0.
+					throttle += throttleDelta;
+					throttle = Mathf.Clamp(throttle, maxReverseThrottle, maxThrottle);
+
+					if (throttle > 0.0f)
+						throttleNotch = ThrottleNotch.FORWARD;
+					else if (throttle < 0.0f)
+						throttleNotch = ThrottleNotch.REVERSE;
+				}
+				else
+				{
+					// Our throttle has notched already, we are limited to a certain range
+					throttle += throttleDelta;
+					switch (throttleNotch)
+					{
+						case ThrottleNotch.FORWARD:
+							throttle = Mathf.Clamp(throttle, 0.0f, maxThrottle);
+							break;
+						case ThrottleNotch.REVERSE:
+							throttle = Mathf.Clamp(throttle, maxReverseThrottle, 0.0f);
+							break;
+						default:
+							Debug.Log("Invalid throttle notch");
+							break;
+					}
+				}
+
+				shipRigidbody.AddForce(throttle * moveSpeed * shipTransform.forward * shipRigidbody.mass);
+				break;
+			}
+			case FlightMode.PARKING:
+			{
+				// If we leave range of our asteroid, we need to leave parking mode
+				//if(closestAsteroid == null)
+				{
+				//	RequestFlightMode(FlightMode.FREE_FLIGHT);
+				}
+				//else
+				{
+					// Behaviour in park mode is to latch on to the surface orientation of the asteroid and move laterally across the surface
+
+					Vector3 lateralMovement = shipTransform.forward * shipInputs.move.z + shipTransform.right * shipInputs.move.x;
+					parkModeVerticalTarget += shipInputs.throttle * parkModeVerticalSensitivity * Time.deltaTime;
+					parkModeVerticalTarget = Mathf.Clamp(parkModeVerticalTarget, 0.0f, 100.0f);
+
+
+					shipRigidbody.AddForce(lateralMovement * parkModeMoveSpeed * shipRigidbody.mass);
+
+					// Raycast from each landing gear and work out average distance to asteroid and average surface normal
+					int numSuccessfulRays = 0;
+					Ray ray;
+					RaycastHit hit;
+					float minimalDistance = float.MaxValue;
+					Vector3 normal = Vector3.zero;
+
+					foreach (Transform rayOrigin in shipExterior.parkModeStabilisationOrigins)
+					{
+						ray = new Ray(shipTransform.position, -shipTransform.up);
+						if (Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("Asteroid")))
+						{
+							numSuccessfulRays++;
+
+							if (hit.distance < minimalDistance)
+								minimalDistance = hit.distance;
+
+							normal += hit.normal;
+						}
+					}
+
+					// With the sums successful, orient ourselves
+					if(numSuccessfulRays > 0)
+					{
+						normal /= numSuccessfulRays;
+
+						Quaternion deltaAngle = Quaternion.FromToRotation(shipTransform.up, normal);
+						float magnitude;
+						Vector3 axis;
+						deltaAngle.ToAngleAxis(out magnitude, out axis);
+						shipRigidbody.AddTorque(axis * magnitude * parkModeTurnSpeed * shipRigidbody.mass);
+
+						float deltaHeight = parkModeVerticalTarget - minimalDistance;
+						shipRigidbody.AddForce(shipTransform.up * deltaHeight * parkModeVerticalSpeed * shipRigidbody.mass);
+					}
+					else
+					{
+						RequestFlightMode(FlightMode.FREE_FLIGHT);
+					}
+				}
+
+				break;
 			}
 		}
 
-		shipRigidbody.AddForce(throttle * moveSpeed * shipTransform.forward);
+		if(shipInputs.select1)
+		{
+			RequestFlightMode(FlightMode.FREE_FLIGHT);
+		}
+		if(shipInputs.select2)
+		{
+			RequestFlightMode(FlightMode.PARKING);
+		}
 	}
 
 	private void UpdateAnims()
 	{
 		throttleAnim.SetValues(throttle, maxReverseThrottle, maxThrottle);
+
+		// Controller Stick Animation
+		helmYaw += shipInputs.rotate.y;
+		helmYaw *= 0.9f;
+		helmPitch *= 0.9f;
+		helm.localEulerAngles = new Vector3(-helmYaw, 0.0f, helmPitch) * 3.0f;
 	}
 
 	protected override void Awake()
@@ -280,7 +335,8 @@ public class ShipControls : Seat
 
 		if (particles != null)
 			particles.Stop();
-		shipTransform = FindObjectOfType<ShipExterior>().transform;
+		shipExterior = FindObjectOfType<ShipExterior>();
+		shipTransform = shipExterior.transform;
 		shipRigidbody = shipTransform.GetComponent<Rigidbody>();
 		throttleAnim = FindObjectOfType<Throttle>();
 	}
@@ -297,59 +353,5 @@ public class ShipControls : Seat
 		base.FixedUpdate();
 
 		ProcessControls();
-
-		// Rotation
-
-
-
-		/*
-		// Apply rotation
-		if (leftEngine && rightEngine)
-		{
-			leftEngine.localEulerAngles = new Vector3(Mathf.LerpAngle(leftEngine.localEulerAngles.x, -leftPitch, Time.deltaTime), 0.0f, 0.0f);
-			rightEngine.localEulerAngles = new Vector3(Mathf.LerpAngle(rightEngine.localEulerAngles.x, -rightPitch, Time.deltaTime), 0.0f, 180.0f);
-		}
-
-		// Apply motion
-		motion += moveInput;
-		motion *= 0.9f;
-
-		switch (state)
-		{
-			case State.FREE_FLIGHT:
-			{
-				// Free flight, use motion and inputs
-				shipTransform.eulerAngles = new Vector3(-pitch, yaw, 0.0f);
-				shipTransform.position += shipTransform.rotation * motion * Time.deltaTime;
-
-				break;
-			}
-			case State.LANDED:
-			{
-				// No movement
-				break;
-			}
-			case State.LANDING:
-			{
-				// Landing mode, lerp to target
-				landingProgress += Time.deltaTime / 5.0f;
-				if (landingProgress >= 1.0f)
-				{
-					landingProgress = 1.0f;
-					state = State.LANDED;
-				}
-				shipTransform.position = Vector3.Lerp(preLandingPos, closestAsteroid.landingPos.position, landingProgress);
-				shipTransform.rotation = Quaternion.Lerp(preLandingRotation, Quaternion.identity, landingProgress);
-				break;
-			}
-		}
-		*/
-
-		// Animations
-		// Controller Stick Animation
-		//helmYaw += shipInputs.yaw;
-		//helmYaw *= 0.9f;
-		//helmPitch *= 0.9f;
-		//helm.localEulerAngles = new Vector3(-helmYaw, 0.0f, helmPitch) * 3.0f;
 	}
 }

@@ -19,6 +19,7 @@ public class OneWayRenderPortal : MonoBehaviour
 	public float nearClipLimit = 0.2f;
 	public float maxRenderDistance = 100.0f;
 	public TriggerVolume playerCheckVolume;
+	public bool mirrorX, mirrorZ;
 
 	public Camera GetCamera()
 	{
@@ -72,11 +73,30 @@ public class OneWayRenderPortal : MonoBehaviour
 			  renderSideTransform.localToWorldMatrix 
 			* cameraSideTransform.worldToLocalMatrix 
 			* fromCamera.transform.localToWorldMatrix;
+
 		Vector3 renderPosition = localToWorldMatrix.GetColumn(3);
 		Quaternion renderRotation = localToWorldMatrix.rotation;
 
+		if (mirrorX)
+		{
+			renderPosition.x = renderSideTransform.position.x + (renderPosition - renderSideTransform.position).x * -1.0f;
+			Vector3 euler = renderRotation.eulerAngles;
+			euler.y *= -1.0f;
+			renderRotation.eulerAngles = euler;
+		}
+		if(mirrorZ)
+		{
+			renderPosition.z = renderSideTransform.position.z + (renderPosition - renderSideTransform.position).z * -1.0f;
+			Vector3 euler = renderRotation.eulerAngles;
+			euler.y *= -1.0f;
+			renderRotation.eulerAngles = euler;
+		}
+
 		// Hide screen so that camera can see through portal
 		renderCamera.transform.SetPositionAndRotation(renderPosition, renderRotation);
+
+
+
 		SetNearClipPlane(fromCamera);
 		renderCamera.Render();
 	}
@@ -100,6 +120,8 @@ public class OneWayRenderPortal : MonoBehaviour
 			// Display the view texture on the screen of the linked portal
 			renderSurface.material.SetTexture("_MainTex", viewTexture);
 		}
+
+		renderSurface.material.SetFloat("_Mirror", (mirrorX || mirrorZ) ? 1.0f : 0.0f);
 	}
 
 	// Sets the thickness of the portal screen so as not to clip with camera near plane when player goes through

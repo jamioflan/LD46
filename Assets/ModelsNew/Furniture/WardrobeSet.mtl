@@ -1,0 +1,11 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl bricksDark
+Kd 0.907 0.708 0.058
+
+newmtl bricks
+Kd 0.792 0.684 0.501
+
+newmtl _defaultMat
+Kd 0.211 0.097 0.026
+

@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class ShipExterior : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public Transform[] parkModeStabilisationOrigins;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public Asteroid closestAsteroid;
 }

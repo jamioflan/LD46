@@ -74,6 +74,8 @@ public struct PlayerInputs
 	public FloatAccumulator throttle;
 	public SinglePressButton interact;
 	public SinglePressButton jump;
+	public SinglePressButton select1;
+	public SinglePressButton select2;
 
 	private bool consumed;
 
@@ -98,6 +100,8 @@ public struct PlayerInputs
 			throttle.Reset();
 			interact.NextFrame();
 			jump.NextFrame();
+			select1.NextFrame();
+			select2.NextFrame();
 		}
 	}
 }

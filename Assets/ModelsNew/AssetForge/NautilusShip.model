@@ -1,0 +1,29 @@
+# Made using Asset Forge (2.0 preview-1b)
+
+:materials
+
+[name:metal;color:RGBA(0.098, 0.757, 0.580, 1.000);shader:Standard;valueA:0.35;valueB:0.5;]
+[name:_defaultMat;color:RGBA(0.890, 0.480, 0.088, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+[name:glass;color:RGBA(1.000, 1.000, 1.000, 1.000);shader:Unlit;]
+[name:dark;color:RGBA(0.224, 0.235, 0.275, 1.000);shader:Standard;valueA:0.35;valueB:0;]
+
+:models
+
+[name:;collection:Ships;type:hull_half;position:(0.0000, 0.0000, 0.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+_defaultMat+_defaultMat;]
+[name:;collection:Ships;type:hull_half;position:(0.0000, 0.0000, 1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+metal+_defaultMat;]
+[name:;collection:Ships;type:hull_halfFrontSmooth;position:(0.0000, 0.0000, 2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+_defaultMat+_defaultMat;]
+[name:;collection:Ships;type:hull_back;position:(0.0000, 0.0000, -2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+_defaultMat+_defaultMat;]
+[name:;collection:Ships;type:rail_frontSmooth;position:(0.0000, 0.5000, 2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+_defaultMat;]
+[name:;collection:Vehicles;type:body_topRound;position:(0.0000, 1.0000, -1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+glass;]
+[name:;collection:Ships;type:hull;position:(0.0000, 0.0000, -1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+metal+_defaultMat;]
+[name:;collection:Aircraft;type:wing;position:(0.0000, 0.2000, 0.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(3.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+metal;]
+[name:;collection:Aircraft;type:wing_round;position:(2.0000, 0.2000, 0.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+metal;]
+[name:;collection:Aircraft;type:wing_round;position:(-2.0000, 0.2000, 0.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(-1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+metal;]
+[name:;collection:Aircraft;type:wing_round;position:(1.0000, 0.6000, -1.7000);rotation:(0.0000, 180.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+metal;]
+[name:;collection:Aircraft;type:wing_round;position:(-1.0000, 0.6000, -1.7000);rotation:(0.0000, 180.0000, 0.0000);scale:(-1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat+metal;]
+[name:;collection:Aircraft;type:rudder;position:(0.2000, 1.0000, -2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:metal+_defaultMat;]
+[name:;collection:Aircraft;type:rudder;position:(-0.2000, 1.0000, -2.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:metal+_defaultMat;]
+[name:;collection:Aircraft;type:turbine_flaps;position:(0.0000, 0.2000, -2.7000);rotation:(0.0000, 180.0000, 0.0000);scale:(0.8000, 0.8000, 0.5000);group:;locked:False;hidden:False;materials:dark+_defaultMat+metal;]
+[name:;collection:Aircraft;type:gear_full;position:(0.0000, 0.5000, 1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:_defaultMat;]
+[name:;collection:Vehicles;type:body_topStraight;position:(0.0000, 0.5000, 1.0000);rotation:(0.0000, 0.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:glass+_defaultMat;]
+[name:;collection:Roofs;type:roof_flat;position:(0.0000, 1.0000, 1.0000);rotation:(0.0000, 180.0000, 0.0000);scale:(1.0000, 1.0000, 1.0000);group:;locked:False;hidden:False;materials:metal;]
