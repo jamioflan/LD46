@@ -3568,7 +3568,7 @@ MonoBehaviour:
   maxThrottle: 2
   maxReverseThrottle: -0.5
   turnSpeed: 10
-  moveSpeed: 2.5
+  moveSpeed: 2500
   parkModeMoveSpeed: 2.5
   parkModeTurnSpeed: 0.5
   parkModeVerticalSpeed: 1
